@@ -1,0 +1,88 @@
+.container-fluid {
+    background-color: #193f76;
+}
+
+.name {
+    margin-bottom: 0px;
+    cursor: default;
+    display: inline;
+}
+
+#skull {
+    cursor: default;
+}
+
+#die {
+    margin: 0;
+    font-weight: 600;
+    cursor: default;
+}
+
+#enter {
+    margin: 0;
+    margin-right: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cont {
+    display: inline;
+    margin-left: 4rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #f6f6fb;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Use a percentage for responsiveness */
+    max-width: 35rem; /* Limit the max width */
+    padding: 1.2rem 2rem;
+    border-radius: 1rem;
+    margin-top: 5rem;
+    
+    box-shadow: 0px 4px 3px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Сам прокручивается */
+/* .container {
+    width: 35%; 
+    height: 75vh; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.2rem 2rem; 
+    background-color: #f6f6fb; 
+    border-radius: 1rem;
+    box-shadow: 0px 4px 3px 4px rgba(0, 0, 0, 0.25); 
+    overflow-y: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem; 
+} */
+
+
+
+#sign-in-button {
+    background-color: #3d7db8;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+#sign-in-button:hover {
+    /* opacity: 0.7; */
+    background-color: #336DA2;
+}
+
+.fs-2 {
+    margin: 0;
+    margin-top: 1rem;
+}
+
+
+
+.form-control::placeholder {
+    color: rgb(184, 185, 185);
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="styles/registrationStyle.css" />
+    <title>Try not to die</title>
+</head>
+<body>
+    <div>
+    <nav class="navbar bg-body-tertiary ">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white">
+            <img src="skull.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center" id="skull">
+            <div class="cont">
+                <p class="name"> Try not to</p>
+                <p class="text-end" id="die"> DIE</p>
+            </div>
+            
+          </a>
+          <a id="enter" class="text-white text-end" href="login.html">Вход</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <form class="row g-3" id="form">
+            <p class="fs-2 fw-bold">Регистрация</p>
+            <div class="col-md-12">
+              <label for="inputName4" class="form-label text-body-secondary">Имя</label>
+              <input type="text" class="form-control" id="inputName4" placeholder="Иванов Иван Иванович">
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputGender" class="form-label text-body-secondary">Пол</label>
+                <select id="inputGender" class="form-select">
+                  <option selected>Мужской</option>
+                  <option>Женский</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputDate" class="form-label text-body-secondary">Введите дату:</label>
+                <input type="date" class="form-control" id="inbel text-body-secondaputDate">
+            </div>
+            
+            <div class="col-12">
+              <label for="inputPhone" class="form-label text-body-secondary">Телефон</label>
+              <input type="tel" class="form-control" id="inputPhone" placeholder="+7 (xxx) xxx xx-xx">
+            </div>
+
+            <div class="col-md-12">
+                <label for="inputSpeciality" class="form-label text-body-secondary">Специальность</label>
+                <select id="inputSpeciality" class="form-select">
+                  <option selected>Акушер-гинеколог</option>
+                  <option>...</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label for="formGroupExampleInput" class="form-label text-body-secondary">Email</label>
+                <input type="email" class="form-control" id="inputEmail3" placeholder="name@example.com">
+              </div>
+              <div class="col-md-12">
+                <label for="formGroupExampleInput2" class="form-label text-body-secondary">Пароль</label>
+                <input type="password" class="form-control" id="inputPassword3">
+              </div>
+            <button class="btn btn-primary" type="submit" id="sign-in-button">Зарегистрироваться</button>
+          </form>
+    </div>
+    </div>
+
+    
+</body>
+<script src="registrationPage.js"></script>
+</html>
