@@ -23,20 +23,21 @@
       </nav>
 
       <div class="container">
-      <form>
+      <form id="login-form">
         <p class="fs-2 fw-bold">Вход</p>
         <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label text-body-secondary">Email</label>
-            <input type="email" class="form-control" id="inputEmail3" placeholder="name@example.com">
-          </div>
-          <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label text-body-secondary">Пароль</label>
-            <input type="password" class="form-control" id="inputPassword3">
-          </div>
+            <label for="inputEmail" class="form-label text-body-secondary">Email</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="inputPassword" class="form-label text-body-secondary">Пароль</label>
+            <input type="password" class="form-control" id="inputPassword">
+        </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-primary" type="button" id="sign-in-button">Войти</button>
-            <button class="btn btn-primary" type="button" id="sign-up-button">Регистрация</button>
-          </div>
+          <button class="btn btn-primary" type="submit" id="sign-in-button">Войти</button>
+          <button class="btn btn-primary" type="button" id="sign-up-button">Регистрация</button>
+        </div>
+
       </form>
     </div>
     <script src="scripts/loginPage.js"></script>
