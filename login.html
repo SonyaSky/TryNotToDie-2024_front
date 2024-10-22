@@ -8,19 +8,28 @@
     <title>Try not to die</title>
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary " >
-        <div class="container-fluid">
-          <a class="navbar-brand text-white">
-            <img src="skull.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center" id="skull">
-            <div class="cont">
-                <p class="name"> Try not to</p>
-                <p class="text-end" id="die"> DIE</p>
-            </div>
-            
-          </a>
-          <a id="enter" class="text-white text-end" href="login.html">Вход</a>
-        </div>
-      </nav>
+    <nav class="navbar bg-body-tertiary ">
+      <div class="container-fluid text-white">
+        <div class="row">
+          <div class="col-auto d-flex justify-content-center align-items-center">
+              <img src="skull.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center" id="skull">
+          </div>
+          <div class="col-auto" id="name">
+              <div class="row">
+                  <div class="col fs-5">
+                      Try not to
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col text-end fs-5" id="die">
+                      DIE
+                  </div>
+              </div>
+          </div>
+      </div>
+        <a id="enter" class="text-white text-end" href="login.html">Вход</a>
+      </div>
+    </nav>
 
       <div class="container">
       <form id="login-form">

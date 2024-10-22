@@ -1,17 +1,16 @@
-
-
 .container-fluid {
     background-color: #193f76;
+    padding: 0.5rem;
 }
 
-.name {
-    margin-bottom: 0px;
+#name {
+    margin-left: 3rem;
     cursor: default;
-    display: inline;
+
 }
 
 #skull {
-    cursor: default;
+    margin-left: 1rem;
 }
 
 #die {
@@ -28,10 +27,7 @@
     text-decoration: none;
 }
 
-.cont {
-    display: inline;
-    margin-left: 4rem;
-}
+
 
 .container {
     background-color: #f6f6fb;

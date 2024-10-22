@@ -31,11 +31,16 @@ login_form.addEventListener('submit', (e) => {
         return;
     } 
 
+
+
     loginDoctor(email, password).then((data) => {
         token = data;
         console.log(token);
+        getProfile(token.token);
     })
     .catch((error) => console.error(error));
+
+    
 
 
 });
@@ -58,4 +63,29 @@ function loginDoctor(email, password)
     .then((response) => response.json())
     .then((data) => data);
 }
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzZGNiOWRkYS02MTcwLTQwZDItNTgyYi0wOGRiZmZhZDZkNmMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hdXRoZW50aWNhdGlvbiI6IjBmNTk2OGQ3LWRhMWUtNDY4ZC04OTViLTExZjQ4ZTQ0OGQyOSIsIm5iZiI6MTcyOTM0NzI5MCwiZXhwIjoxNzI5MzUwODkwLCJpYXQiOjE3MjkzNDcyOTAsImlzcyI6Ik1JUy5CYWNrIiwiYXVkIjoiTUlTLkJhY2sifQ.OzsE70l-Ld86rRL0Ay2WoopmZzjPZDYpOHU6EzFNtzg
+function getProfile(token) {
+    return fetch("https://mis-api.kreosoft.space/api/doctor/profile", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json(); 
+    })
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((error) => {
+        console.error('Error fetching data:', error); 
+    });
+}
+
+
 
