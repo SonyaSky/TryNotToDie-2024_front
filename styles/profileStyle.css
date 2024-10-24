@@ -32,19 +32,58 @@
 }
 
 .custom-dropdown {
-    width: 100px; /* Set your desired width here */
+    width: 13rem; 
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+
+    padding-right: 30px; 
+
 }
 
 .custom-dropdown::after {
-    content: ''; /* Create a pseudo-element for the arrow */
+    content: '';
     position: absolute;
-    right: 10px; /* Position the arrow */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for vertical centering */
-    border: solid transparent; /* Create a transparent border */
-    border-width: 5px 5px 0; /* Create a triangle */
-    border-top-color: #ffffff; /* Change this to match your theme */
+    right: 10px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    border: solid transparent; 
+    border-width: 5px 5px 0; 
+    border-top-color: #ffffff; 
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #f6f6fb;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 35rem; 
+    padding: 1.2rem 2rem;
+    border-radius: 1rem;
+    margin-top: 3rem;
+    box-shadow: 0px 4px 3px 4px rgba(0, 0, 0, 0.25);
+}
+
+#sign-in-button {
+    background-color: #3d7db8;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+#sign-in-button:hover {
+    /* opacity: 0.7; */
+    background-color: #336DA2;
+}
+
+.fs-2 {
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.form-control::placeholder {
+    color: rgb(184, 185, 185);
 }

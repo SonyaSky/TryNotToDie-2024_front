@@ -36,8 +36,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%; /* Use a percentage for responsiveness */
-    max-width: 35rem; /* Limit the max width */
+    width: 90%; 
+    max-width: 35rem; 
     padding: 1.2rem 2rem;
     border-radius: 1rem;
     margin-top: 5rem;

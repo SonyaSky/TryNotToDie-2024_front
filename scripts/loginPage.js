@@ -1,7 +1,9 @@
+
+
 const sign_up_button = document.getElementById("sign-up-button");
 
 sign_up_button.addEventListener('click', function() {
-    window.location.href = "registration.html"
+    window.location.href = "registration.html";
 });
 
 
@@ -10,6 +12,7 @@ const sign_in_button = document.getElementById("sign-in-button");
 const input_email = document.getElementById("inputEmail");
 const input_password = document.getElementById("inputPassword");
 const login_form = document.getElementById("login-form");
+
 
 
 login_form.addEventListener('submit', (e) => {
@@ -32,15 +35,25 @@ login_form.addEventListener('submit', (e) => {
     } 
 
 
+    let profile;
 
-    loginDoctor(email, password).then((data) => {
-        token = data;
+    loginDoctor(email, password)
+    .then((data) => {
+        const token = data.token; 
         console.log(token);
-        getProfile(token.token);
+        localStorage.setItem('token', JSON.stringify(token));
+        return getProfile(token); 
+    })
+    .then((profileData) => {
+        profile = profileData; 
+        console.log(profile); 
+        localStorage.setItem('profileData', JSON.stringify(profile));
+        window.location.href = "profile.html";
+        
     })
     .catch((error) => console.error(error));
+ 
 
-    
 
 
 });
@@ -64,7 +77,7 @@ function loginDoctor(email, password)
     .then((data) => data);
 }
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzZGNiOWRkYS02MTcwLTQwZDItNTgyYi0wOGRiZmZhZDZkNmMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hdXRoZW50aWNhdGlvbiI6IjBmNTk2OGQ3LWRhMWUtNDY4ZC04OTViLTExZjQ4ZTQ0OGQyOSIsIm5iZiI6MTcyOTM0NzI5MCwiZXhwIjoxNzI5MzUwODkwLCJpYXQiOjE3MjkzNDcyOTAsImlzcyI6Ik1JUy5CYWNrIiwiYXVkIjoiTUlTLkJhY2sifQ.OzsE70l-Ld86rRL0Ay2WoopmZzjPZDYpOHU6EzFNtzg
+
 function getProfile(token) {
     return fetch("https://mis-api.kreosoft.space/api/doctor/profile", {
         method: 'GET',
@@ -80,12 +93,13 @@ function getProfile(token) {
         return response.json(); 
     })
     .then((data) => {
-        console.log(data);
+        return data;
     })
     .catch((error) => {
         console.error('Error fetching data:', error); 
     });
 }
+
 
 
 
