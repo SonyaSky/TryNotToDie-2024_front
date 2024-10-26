@@ -51,39 +51,47 @@
     border-top-color: #ffffff; 
 }
 
-
 .container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    background-color: #f6f6fb;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 35rem; 
-    padding: 1.2rem 2rem;
-    border-radius: 1rem;
-    margin-top: 3rem;
-    box-shadow: 0px 4px 3px 4px rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    height: 100px;
+    width: 60%;
 }
 
-#sign-in-button {
+.bi {
+    margin-right: 5px;
+}
+
+
+#add-patient-button {
     background-color: #3d7db8;
+    padding: 5px 15px;
     border-radius: 3px;
     transition: 0.3s;
 }
 
-#sign-in-button:hover {
-    /* opacity: 0.7; */
+#add-patient-button:hover {
     background-color: #336DA2;
 }
 
 .fs-2 {
-    margin: 0;
-    margin-top: 1rem;
+    margin: 0px;
 }
 
-.form-control::placeholder {
-    color: rgb(184, 185, 185);
+.row {
+    padding: 0px;
 }
+
+.filters {
+    background-color: #f6f6fb;
+    margin: 2rem 0rem;
+    padding: 1rem 2rem;
+}
+
+form {
+    padding: 2rem;
+}
+
+.form-select option.placeholder {
+    color: #b2bbc2;
+}
+

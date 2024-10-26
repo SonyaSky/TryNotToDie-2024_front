@@ -12,7 +12,7 @@ const profile_form = document.getElementById("profile-form");
 window.load = setProfile();
 
 function setProfile() {
-    let profileData = JSON.parse(localStorage.getItem('profileData')); 
+    var profileData = JSON.parse(localStorage.getItem('profileData')); 
     console.log(profileData);
     input_name.value = profileData.name;
     profile_name.textContent = profileData.name;
@@ -59,10 +59,9 @@ profile_form.addEventListener('submit', (e) => {
     };
 
     let token = JSON.parse(localStorage.getItem('token'));
-    localStorage.setItem('profileData', JSON.stringify(editProfile));
+    localStorage.setItem('profileData', JSON.stringify(editedProfile));
     console.log(token);
-    console.log(editedProfile);
-
+    setProfile();
     editProfile(editedProfile, token);
 })
 

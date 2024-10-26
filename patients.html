@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles/patientsStyle.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="scripts/jquery.maskedinput.min.js"></script>
+    <title>Try not to die</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary text-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-auto d-flex justify-content-center align-items-center">
+                    <img src="skull.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-center" id="skull">
+                </div>
+                <div class="col-auto" id="name">
+                    <div class="row">
+                        <div class="col fs-5">
+                            Try not to
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-end fs-5" id="die">
+                            DIE
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse " id="navbarNavDropdown">
+                <ul class="navbar-nav ">
+                <li class="nav-item me-3">
+                    <a class="nav-link " aria-current="page" href="#">Пациенты</a>
+                </li>
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="#">Консультация</a>
+                </li>
+                <li class="nav-item me-3">
+                    <a class="nav-link" href="#">Отчеты и статистика</a>
+                </li>
+                </ul>
+            </div> 
+            <div class="dropdown">
+                    <a class="nav-link dropdown-toggle custom-dropdown" id="profileName" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="profile.html">Профиль</a></li>
+                        <li><a class="dropdown-item" id="logout">Выход</a></li>
+                      </ul>
+            </div>    
+            </div>
+    </nav>
+
+    <div class="container">
+        <div class="title">
+            <div class="row">
+                <div class="col ">
+                    <p class="fs-2 fw-bold ">Пациенты</p>
+                </div>
+                <div class="col text-end align-self-center">
+                    <button class="btn btn-primary" type="button" id="add-patient-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                        </svg>
+                        Регистрация нового пациента
+                    </button>
+    
+                </div>
+            </div>
+        </div>
+        <div class="filters">
+            <form class="row">
+                <div class="row mb-3">
+                    <p class="fs-4 fw-bold">Фильтры и сортировка</p>
+                <div class="col-md-6">
+                    <label for="inputName" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Иванов Иван Иванович">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputСonclusion" class="form-label text-body-secondary">Имеющиеся заключения</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option value="" disabled selected hidden class="placeholder">Выберите заключения</option>
+                        <option value="1">Болезнь</option>
+                        <option value="2">Выздоровление</option>
+                        <option value="3">Смерть</option>
+                    </select>
+                </div>
+                </div>
+                <div class="row mb-3 ">
+                    <div class="col-md-4 align-self-end">
+                        <div class="form-check form-switch " style="--bs-form-switch-width:40px;--bs-form-switch-height:24px">
+                            <input class="form-check-input" type="checkbox" role="switch" id="planned-visits" />
+                            <label class="form-check-label ms-2" for="planned-visits">Есть запланированные визиты</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 align-self-end">
+                        <div class="form-check form-switch" style="--bs-form-switch-width:40px;--bs-form-switch-height:24px">
+                            <input class="form-check-input" type="checkbox" role="switch" id="my-patients" />
+                            <label class="form-check-label ms-2" for="my-patients">Мои пациенты</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputSort" class="form-label text-body-secondary">Сортировка пациентов</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="1" selected>По имени (А-Я)</option>
+                            <option value="2">По имени (Я-А)</option>
+                            <option value="3">По дате создания (сначала новые)</option>
+                            <option value="4">По дате создания (сначала старые)</option>
+                            <option value="5">По дате осмотров (сначала новые)</option>
+                            <option value="6">По дате осмотров (сначала старые)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="d-flex flex-column" style="width: fit-content;">
+                        <label for="inputPatientsQuantity" class="form-label text-body-secondary">Число пациентов на странице</label>
+                        <select class="form-select" aria-label="Default select example" id="inputPatientsQuantity">
+                            <option value="1" selected>4</option>
+                            <option value="2">...</option>
+                        </select>
+                    </div>
+                    <div class="col align-self-end text-end">
+                        <button class="btn btn-primary " type="submit" id="add-patient-button">
+                            Поиск
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

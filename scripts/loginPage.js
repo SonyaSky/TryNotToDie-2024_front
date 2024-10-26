@@ -51,7 +51,13 @@ login_form.addEventListener('submit', (e) => {
         window.location.href = "profile.html";
         
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+        if (error.message === "Login failed") {
+            alert('Неверный email или пароль'); 
+        } else {
+            console.error('Error:', error.message); 
+        }
+    });
 
 });
 
@@ -70,8 +76,26 @@ function loginDoctor(email, password)
           },
         body: JSON.stringify(loginDto),
       })
-    .then((response) => response.json())
-    .then((data) => data);
+      .then((response) => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                if (errorData.message && errorData.message.includes('Login failed')) {
+                    throw new Error('Неверный email или пароль'); // Throw error for login failure
+                }
+                throw new Error('An error occurred: ' + (errorData.message || 'Unknown error')); // Handle other errors
+            });
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log('Login successful:', data);
+        return data;
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+        alert(error.message);
+        throw error;
+    });
 }
 
 

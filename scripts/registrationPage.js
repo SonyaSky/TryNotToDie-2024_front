@@ -152,8 +152,6 @@ function addNewDoctor(profile) {
         console.error('Error:', error.message);
         if (error.message.includes('Username') && error.message.includes('is already taken')) {
             alert('Пользователь с таким email уже существует');
-        } else {
-            alert(error.message); 
         }
       });
 }
