@@ -23,6 +23,10 @@
     color: white;
 }
 
+.nav-link:hover{
+    color: #cad3da;
+}
+
 #navbarNavDropdown {
     margin-left: 3rem;
 }
@@ -51,10 +55,9 @@
     border-top-color: #ffffff; 
 }
 
-.container {
+#my-container {
     margin: 0 auto;
-    height: 100px;
-    width: 60%;
+    width: 70%;
 }
 
 .bi {
@@ -64,8 +67,8 @@
 
 #add-patient-button {
     background-color: #3d7db8;
-    padding: 5px 15px;
-    border-radius: 3px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2px;
     transition: 0.3s;
 }
 
@@ -82,7 +85,7 @@
 }
 
 .filters {
-    background-color: #f6f6fb;
+    background-color: #f7f6fc;
     margin: 2rem 0rem;
     padding: 1rem 2rem;
 }
@@ -91,7 +94,59 @@ form {
     padding: 2rem;
 }
 
-.form-select option.placeholder {
+.form-control::placeholder {
+    color: rgb(184, 185, 185);
+}
+
+.choose {
+    color: rgb(184, 185, 185);
+}
+
+/* Toggle */
+.form-check-input {
+    margin-right: 1rem;
+    transform: scale(2);
+    cursor: pointer; 
+    /* background-color: #d3d3eb;  */
+}
+
+.form-check-input:focus {
+    box-shadow: none; 
+    border-color: #f7f6fc;
+}
+
+.form-check-input:checked {
+    background-color: #327cb9; 
+}
+
+/* .form-check-input:before {
+    background-color: #ffffff; 
+} */
+
+/* Toggle */
+
+#search-button {
+    background-color: #3d7db8;
+    padding: 5px 4.5rem;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.patient {
+    padding: 1rem;
+    background-color: #f7f6fc;
+}
+
+.fs-6 {
+    margin: 0px;
+}
+
+.info {
+    margin: 0px;
     color: #b2bbc2;
+}
+
+.patientData {
+    color: black;
 }
 

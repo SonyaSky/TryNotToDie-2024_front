@@ -78,8 +78,11 @@
     margin-top: 1rem;
 }
 
-
-
 .form-control::placeholder {
     color: rgb(184, 185, 185);
+}
+
+.modal-body {
+    margin: 0rem;
+    padding: 0rem;
 }

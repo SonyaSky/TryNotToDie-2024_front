@@ -23,6 +23,10 @@
     color: white;
 }
 
+.nav-link:hover{
+    color: #cad3da;
+}
+
 #navbarNavDropdown {
     margin-left: 3rem;
 }

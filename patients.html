@@ -55,14 +55,14 @@
             </div>
     </nav>
 
-    <div class="container">
+    <div class="container" id="my-container">
         <div class="title">
             <div class="row">
                 <div class="col ">
                     <p class="fs-2 fw-bold ">Пациенты</p>
                 </div>
                 <div class="col text-end align-self-center">
-                    <button class="btn btn-primary" type="button" id="add-patient-button">
+                    <button class="btn btn-primary" type="button" id="add-patient-button" data-bs-toggle="modal" data-bs-target="#registrationModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
                             <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                             <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
@@ -84,7 +84,7 @@
                 <div class="col-md-6">
                     <label for="inputСonclusion" class="form-label text-body-secondary">Имеющиеся заключения</label>
                     <select class="form-select" aria-label="Default select example">
-                        <option value="" disabled selected hidden class="placeholder">Выберите заключения</option>
+                        <option value="" disabled selected hidden class="choose">Выберите заключения</option>
                         <option value="1">Болезнь</option>
                         <option value="2">Выздоровление</option>
                         <option value="3">Смерть</option>
@@ -93,18 +93,18 @@
                 </div>
                 <div class="row mb-3 ">
                     <div class="col-md-4 align-self-end">
-                        <div class="form-check form-switch " style="--bs-form-switch-width:40px;--bs-form-switch-height:24px">
+                        <div class="form-check form-switch" >
                             <input class="form-check-input" type="checkbox" role="switch" id="planned-visits" />
                             <label class="form-check-label ms-2" for="planned-visits">Есть запланированные визиты</label>
                         </div>
                     </div>
                     <div class="col-md-4 align-self-end">
-                        <div class="form-check form-switch" style="--bs-form-switch-width:40px;--bs-form-switch-height:24px">
-                            <input class="form-check-input" type="checkbox" role="switch" id="my-patients" />
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="my-patients" checked/>
                             <label class="form-check-label ms-2" for="my-patients">Мои пациенты</label>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 ">
                         <label for="inputSort" class="form-label text-body-secondary">Сортировка пациентов</label>
                         <select class="form-select" aria-label="Default select example">
                             <option value="1" selected>По имени (А-Я)</option>
@@ -125,14 +125,98 @@
                         </select>
                     </div>
                     <div class="col align-self-end text-end">
-                        <button class="btn btn-primary " type="submit" id="add-patient-button">
+                        <button class="btn btn-primary " type="submit" id="search-button">
                             Поиск
                         </button>
                     </div>
                 </div>
             </form>
         </div>
+        <div class="container">
+            <div class="row gx-3 gy-3" id="patients-list">
+                <div class="col-12 col-lg-6">
+                    <div class="patient">
+                        <p class="fs-5 fw-bold"> Name</p>
+                        <p class="fs-6 info">
+                            Email &ndash; <span class="patientData" id="emailData"> email </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Пол &ndash; <span class="patientData" id="genderData"> пол </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="patient">
+                        <p class="fs-5 fw-bold"> Name</p>
+                        <p class="fs-6 info">
+                            Email &ndash; <span class="patientData" id="emailData"> email </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Пол &ndash; <span class="patientData" id="genderData"> пол </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="patient">
+                        <p class="fs-5 fw-bold"> Name</p>
+                        <p class="fs-6 info">
+                            Email &ndash; <span class="patientData" id="emailData"> email </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Пол &ndash; <span class="patientData" id="genderData"> пол </span>
+                        </p>
+                        <p class="fs-6 info">
+                            Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Регистрация пациента</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> 
+                <div class="modal-body">
+                    <div class="container">
+                        <form class="row">
+                            <div class="mb-3">
+                                <label for="inputName4" class="form-label text-body-secondary">Имя</label>
+                                <input type="text" class="form-control" id="inputName" placeholder="Иванов Иван Иванович">
+                                </div>
+                            
+                                <div class="col-6 mb-3">
+                                    <label for="inputGender" class="form-label text-body-secondary">Пол</label>
+                                    <select id="inputGender" class="form-select">
+                                    <option selected>Мужской</option>
+                                    <option>Женский</option>
+                                    </select>
+                                </div>
+                            
+                                <div class="col-6 mb-3">
+                                    <label for="inputDate" class="form-label text-body-secondary">Дата рождения</label>
+                                    <input type="date" class="form-control" id="inputDate">
+                                </div>
+                                <button class="btn btn-primary" type="submit" id="sign-in-button">Зарегистрироваться</button>
+                        </form>
+                    </div>
+                </div> 
+        </div>
+      </div>
     </div>
     
 </body>
 </html>
+
