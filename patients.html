@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/patientsStyle.css" />
+    <link rel="stylesheet" href="styles/navBar.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="scripts/jquery.maskedinput.min.js"></script>
     <title>Try not to die</title>
@@ -34,7 +35,7 @@
             <div class="collapse navbar-collapse " id="navbarNavDropdown">
                 <ul class="navbar-nav ">
                 <li class="nav-item me-3">
-                    <a class="nav-link " aria-current="page" href="#">Пациенты</a>
+                    <a class="nav-link " aria-current="page" href="patients.html">Пациенты</a>
                 </li>
                 <li class="nav-item me-3">
                     <a class="nav-link" href="#">Консультация</a>
@@ -120,7 +121,7 @@
                     <div class="d-flex flex-column" style="width: fit-content;">
                         <label for="inputPatientsQuantity" class="form-label text-body-secondary">Число пациентов на странице</label>
                         <select class="form-select" aria-label="Default select example" id="inputPatientsQuantity">
-                            <option value="1" selected>4</option>
+                            <option value="1" selected>5</option>
                             <option value="2">...</option>
                         </select>
                     </div>
@@ -134,12 +135,9 @@
         </div>
         <div class="container">
             <div class="row gx-3 gy-3" id="patients-list">
-                <div class="col-12 col-lg-6">
+                <!-- <div class="col-12 col-lg-6">
                     <div class="patient">
                         <p class="fs-5 fw-bold"> Name</p>
-                        <p class="fs-6 info">
-                            Email &ndash; <span class="patientData" id="emailData"> email </span>
-                        </p>
                         <p class="fs-6 info">
                             Пол &ndash; <span class="patientData" id="genderData"> пол </span>
                         </p>
@@ -147,76 +145,50 @@
                             Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
                         </p>
                     </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="patient">
-                        <p class="fs-5 fw-bold"> Name</p>
-                        <p class="fs-6 info">
-                            Email &ndash; <span class="patientData" id="emailData"> email </span>
-                        </p>
-                        <p class="fs-6 info">
-                            Пол &ndash; <span class="patientData" id="genderData"> пол </span>
-                        </p>
-                        <p class="fs-6 info">
-                            Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <div class="patient">
-                        <p class="fs-5 fw-bold"> Name</p>
-                        <p class="fs-6 info">
-                            Email &ndash; <span class="patientData" id="emailData"> email </span>
-                        </p>
-                        <p class="fs-6 info">
-                            Пол &ndash; <span class="patientData" id="genderData"> пол </span>
-                        </p>
-                        <p class="fs-6 info">
-                            Дата рождения &ndash; <span class="patientData" id="birthdayData"> дата </span>
-                        </p>
-                    </div>
-                </div>
+                </div> -->
             </div>
         </div>
-        
-        
     </div>
+    
+    <nav aria-label="Page navigation">
+        <ul id="pagination-controls" class="pagination justify-content-center">
+            
+        </ul>
+    </nav>
 
     <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Регистрация пациента</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div> 
-                <div class="modal-body">
-                    <div class="container">
-                        <form class="row">
-                            <div class="mb-3">
-                                <label for="inputName4" class="form-label text-body-secondary">Имя</label>
-                                <input type="text" class="form-control" id="inputName" placeholder="Иванов Иван Иванович">
-                                </div>
-                            
-                                <div class="col-6 mb-3">
-                                    <label for="inputGender" class="form-label text-body-secondary">Пол</label>
-                                    <select id="inputGender" class="form-select">
-                                    <option selected>Мужской</option>
-                                    <option>Женский</option>
-                                    </select>
-                                </div>
-                            
-                                <div class="col-6 mb-3">
-                                    <label for="inputDate" class="form-label text-body-secondary">Дата рождения</label>
-                                    <input type="date" class="form-control" id="inputDate">
-                                </div>
-                                <button class="btn btn-primary" type="submit" id="sign-in-button">Зарегистрироваться</button>
-                        </form>
-                    </div>
-                </div> 
+            <div class="modal-body">
+                <div class="container">
+                    <p class="fs-2 fw-bold" id="registerName">Регистрация пациента</p>
+                    <form class="row" id="register-patient">
+                        <div class="mb-3">
+                            <label for="inputPatientName" class="form-label text-body-secondary">ФИО</label>
+                            <input type="text" class="form-control" id="inputPatientName" placeholder="Иванов Иван Иванович">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="inputGender" class="form-label text-body-secondary">Пол</label>
+                            <select id="inputGender" class="form-select">
+                            <option selected>Мужской</option>
+                            <option>Женский</option>
+                            </select>
+                        </div>
+                    
+                        <div class="col-6 mb-3">
+                            <label for="inputDate" class="form-label text-body-secondary">Дата рождения</label>
+                            <input type="date" class="form-control" id="inputDate">
+                        </div>
+                        <button class="btn btn-primary" type="submit" id="registration-button">Зарегистрировать</button>
+                    </form>
+                </div>
+            </div> 
         </div>
       </div>
     </div>
     
 </body>
+<script src="scripts/patientsPage.js"></script>
+<script src="scripts/logout.js"></script>
 </html>
 

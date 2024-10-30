@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="styles/profileStyle.css" />
+    <link rel="stylesheet" href="styles/patientStyle.css" />
     <link rel="stylesheet" href="styles/navBar.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="scripts/jquery.maskedinput.min.js"></script>
@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse " id="navbarNavDropdown">
                 <ul class="navbar-nav ">
                 <li class="nav-item me-3">
-                    <a class="nav-link " href="patients.html">Пациенты</a>
+                    <a class="nav-link " aria-current="page" href="patients.html">Пациенты</a>
                 </li>
                 <li class="nav-item me-3">
                     <a class="nav-link" href="#">Консультация</a>
@@ -55,46 +55,33 @@
             </div>    
             </div>
     </nav>
-
-    <div class="container">
-        <form class="row g-3" id="profile-form">
-            <p class="fs-2 fw-bold">Профиль</p>
-            <div class="col-md-12">
-              <label for="inputName" class="form-label text-body-secondary">Имя</label>
-              <input type="text" class="form-control" id="inputName" placeholder="Иванов Иван Иванович">
+    <div class="container" id="my-container">
+        <div class="title">
+            <div class="row gy-2">
+                <div class="col-6">
+                    <p class="fs-2 fw-bolder ">Медицинская карта пациента</p>
+                </div>
+                <div class="col-6 text-end align-self-center">
+                    <button class="btn btn-primary" type="button" id="add-inspections-button" data-bs-toggle="modal" data-bs-target="#registrationModal">
+                        Добавить осмотр
+                    </button>
+    
+                </div>
+                <div class="col-6">
+                    <p class="fs-4 fw-medium d-inline-block mb-0">Хлебодарова Анна Сергеевна</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="blue" class="bi bi-gender-female d-inline-block ms-2 align-self-center" viewBox="0 0 16 16" style="vertical-align: middle; margin-top: -10px;">
+                        <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5"/>
+                    </svg>
+                </div>
+                <div class="col-6 text-end align-self-center">
+                    <p class="fs-6">
+                        Дата рождения: <span class="patientData" id="birthdayData"> дата </span>
+                    </p>
+    
+                </div>
             </div>
-
-            <div class="col-md-6">
-                <label for="inputGender" class="form-label text-body-secondary">Пол</label>
-                <select id="inputGender" class="form-select">
-                  <option selected>Мужской</option>
-                  <option>Женский</option>
-                </select>
-            </div>
-
-            <div class="col-md-6">
-                <label for="inputDate" class="form-label text-body-secondary">Дата рождения</label>
-                <input type="date" class="form-control" id="inputDate">
-            </div>
-            
-            <div class="col-12">
-              <label for="phone" class="form-label text-body-secondary">Телефон</label>
-              <input type="text" class="form-control" id="phone" placeholder="+7 (xxx) xxx xx-xx">
-            </div>
-            <div class="col-md-12">
-                <label for="inputEmail" class="form-label text-body-secondary">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com">
-            </div>
-              
-            <button class="btn btn-primary" type="submit" id="save-changes-button">Сохранить изменения</button>
-          </form>
+        </div>
     </div>
-    </div>
-
-    <script>
-        $('#phone').mask('+7 (999) 999 99-99');
-    </script>
+    
 </body>
-<script src="scripts/profilePage.js"></script>
-<script src="scripts/logout.js"></script>
 </html>
