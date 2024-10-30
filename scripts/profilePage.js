@@ -16,7 +16,7 @@ function setProfile() {
     console.log(profileData);
     input_name.value = profileData.name;
     profile_name.textContent = profileData.name;
-    input_date.value = profileData.birthday.split('T')[0];;
+    input_date.value = profileData.birthday.split('T')[0];
     input_phone.value = formatPhoneNumber(profileData.phone);
     input_email.value = profileData.email;
 

@@ -1,20 +1,94 @@
+.btn {
+    background-color: #3d7db8;
+}
+
+.btn:hover {
+    background-color: #336DA2;
+}
+
 #my-container {
     padding-top: 1rem;
     margin: 0 auto;
     width: 70%;
 }
 
+#patient-title {
+    margin: 0rem 1rem;
+}
+
 #add-inspections-button {
-    background-color: #3d7db8;
     padding: 0.5rem 2rem;
     border-radius: 2px;
     transition: 0.3s;
 }
 
-#add-inspections-button:hover {
-    background-color: #336DA2;
+.fs-6 {
+    margin: 0px;
+}
+
+.filters {
+    background-color: #f7f6fc;
+    margin: 1rem 0rem;
+    padding: 1rem 1rem;
+}
+
+form {
+    padding: 1rem;
+}
+
+.form-control::placeholder {
+    color: rgb(184, 185, 185);
+}
+
+.choose {
+    color: rgb(184, 185, 185);
+}
+
+#search-button {
+    padding: 5px 4.5rem;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.patient {
+    padding: 1rem;
+    background-color: #f7f6fc;
+}
+
+.dead-patient {
+    padding: 1rem;
+    background-color: #ffefe8;
 }
 
 .fs-6 {
+    margin-bottom: 0.5rem;
+}
+
+.info {
     margin: 0px;
+    color: #b2bbc2;
+}
+
+.badge {
+    margin-right: 0.5rem;
+}
+
+.my {
+    margin:0px;
+}
+
+.text-decoration-none {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+}
+
+.open-button {
+    font-size:1.8rem;
+    margin-top: 5px;
+    padding: 0px;
+    display: flex;
+}
+
+.child {
+    margin-left: 3rem;
 }

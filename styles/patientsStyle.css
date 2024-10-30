@@ -78,6 +78,10 @@ form {
 .patient {
     padding: 1rem;
     background-color: #f7f6fc;
+    cursor: pointer;
+}
+.patient:hover {
+    background-color: #edecf3;
 }
 
 .fs-6 {

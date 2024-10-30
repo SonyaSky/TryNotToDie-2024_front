@@ -20,10 +20,6 @@ function setPatients() {
         patientsData.patients.forEach((element) => {
             makePatient(element);
         });
-    })
-    .catch((error) => {
-        console.error('Error:', error.message); 
-
     });
     
 }
@@ -102,12 +98,19 @@ function makePatient(data) {
     birthday.textContent = "Дата рождения \u2013 ";
     const birthdayData = document.createElement("span");
     birthdayData.classList.add("patientData");
-    birthdayData.textContent = data.birthday;
+    const date = new Date(data.birthday);
+    birthdayData.textContent = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
     birthday.appendChild(birthdayData);
     patient.appendChild(birthday);
 
     col.appendChild(patient);
     patients_list.appendChild(col);
+
+    patient.addEventListener('click', () => {
+        console.log(data);
+        localStorage.setItem('patientData', JSON.stringify(data));
+        window.location.href = "patient.html";
+    })
 
 }
 

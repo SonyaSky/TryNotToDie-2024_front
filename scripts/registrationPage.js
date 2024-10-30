@@ -127,7 +127,7 @@ registration_form.addEventListener('submit', (e) => {
 
 
 function findSpecialityId(name) {
-    return specialties.find(specialty => specialty.name === name).id;
+    return specialties.find(specialty => specialty.name == name).id;
 }
 
 
