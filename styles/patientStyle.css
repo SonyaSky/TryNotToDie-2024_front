@@ -92,3 +92,25 @@ form {
 .child {
     margin-left: 3rem;
 }
+
+#gender-icon {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0rem;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+.page-link:hover {
+    background-color: #ffefe8;
+}
