@@ -1,10 +1,30 @@
 const profile_name = document.getElementById("profileName");
 const patients_list = document.getElementById("patients-list");
-const pagination_controls = document.getElementById('pagination-controls');
+const pagination_list = document.getElementById("pages");
 const registration_form = document.getElementById('register-patient');
 const input_patient_name = document.getElementById('inputPatientName');
 const input_patient_gender = document.getElementById("inputGender");
 const input_patient_birthday = document.getElementById("inputDate");
+
+const filter_form = document.getElementById('filter-form');
+const input_name = document.getElementById('inputName');
+const select_conslusion = document.getElementById('select');
+const planned_check = document.getElementById('planned-visits');
+const my_patients = document.getElementById('my-patients');
+const select_sorting = document.getElementById('sorting');
+const patients_count = document.getElementById('patientCount');
+
+var requestData = {
+    name: "",
+    conclusions: "",
+    sorting: "",
+    scheduled: false, 
+    mine: true,
+    page: 1,
+    size: 5
+}
+var count;
+
 
 window.load = setPatients();
 
@@ -13,10 +33,11 @@ function setPatients() {
     console.log(profileData);
     profile_name.textContent = profileData.name;
 
-    getPatients("", "", "", false, true, 1, 5)
+    getPatients()
     .then((patientsData) => {
-        console.log(patientsData.patients); 
-        patients = patientsData.patients;
+        console.log(patientsData); 
+        count = patientsData.pagination.count;
+        setupPagination();
         patientsData.patients.forEach((element) => {
             makePatient(element);
         });
@@ -24,22 +45,126 @@ function setPatients() {
     
 }
 
+function setupPagination() {
+    if (count == 0) {
+        noPatients();
+        return;
+    }
+    while (pagination_list.firstChild) {
+        pagination_list.removeChild(pagination_list.firstChild);
+    }
+    const prev = document.createElement("li");
+    prev.className = 'page-item';
+    const atr = document.createElement("a");
+    atr.className = 'page-link';
+    atr.ariaLabel = "Previous";
+    atr.innerHTML = "&lt;";
+    prev.appendChild(atr);
+    pagination_list.appendChild(prev);
+
+
+    for (var i = 1; i < count + 1; i++) {
+        const btn = createButton(i);
+        pagination_list.appendChild(btn);
+    }
+    const next = document.createElement("li");
+    next.className = 'page-item';
+    const atr1 = document.createElement("a");
+    atr1.className = 'page-link';
+    atr1.ariaLabel = "Next";
+    atr1.innerHTML = "&gt;";
+    next.appendChild(atr1);
+    pagination_list.appendChild(next);
+
+}
+
+function createButton(page) {
+    const button = document.createElement("li");
+    button.className = 'page-item';
+    if (page == requestData.page) button.classList.add('active');
+    const atr = document.createElement("a");
+    atr.className = 'page-link';
+    atr.innerHTML = page;
+    button.appendChild(atr);
+
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const current_btn = document.querySelector('li.page-item.active');
+		current_btn.classList.remove('active');
+        requestData.page = page;
+        button.classList.add('active');
+        while (patients_list.firstChild) {
+            patients_list.removeChild(patients_list.firstChild);
+        }
+
+        getPatients()
+        .then((patientsData) => {
+            console.log(patientsData); 
+            patientsData.patients.forEach((element) => {
+                makePatient(element);
+            });
+        });
+
+    })
+    return button;
+}
+
+function noPatients() {
+    const div = document.createElement("div");
+    div.className = 'col-12';
+    const p = document.createElement("p");
+    p.className = 'fs-3 text-center';
+    p.innerHTML = "Таких пациентов нет :(";
+    div.appendChild(p);
+    inspections_list.appendChild(div);
+}
+
+
+filter_form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    requestData.name = input_name.value;
+    requestData.conclusions = select_conslusion.value;
+    requestData.scheduled = planned_check.checked;
+    requestData.mine = my_patients.checked;
+    requestData.sorting = select_sorting.value;
+    requestData.page = 1;
+    requestData.size = patients_count.value;
+    console.log(requestData);
+    while (patients_list.firstChild) {
+        patients_list.removeChild(patients_list.firstChild);
+    }
+
+    getPatients()
+    .then((patientsData) => {
+        console.log(patientsData); 
+        count = patientsData.pagination.count;
+        setupPagination();
+        patientsData.patients.forEach((element) => {
+            makePatient(element);
+        });
+    });
+})
+
+
+
+
+
 //https://mis-api.kreosoft.space/api/patient?name=1&conclusions=Disease&sorting=NameAsc&scheduledVisits=false&onlyMine=false&page=1&size=5
-function getPatients(name, conclusions, sorting, scheduled, mine, page, size) {
+function getPatients() {
     var url = "https://mis-api.kreosoft.space/api/patient?";
-    if (name != "") {
-        url += `name=${name}&`;
+    if (requestData.name != "") {
+        url += `name=${requestData.name}&`;
     }
-    if (conclusions != "") {
-        url += `conclusions=${name}&`;
+    if (requestData.conclusions != "") {
+        url += `conclusions=${requestData.conclusions}&`;
     }
-    if (sorting != "") {
-        url += `sorting=${name}&`;
+    if (requestData.sorting != "") {
+        url += `sorting=${requestData.name}&`;
     }
-    url += `scheduledVisits=${scheduled}&`;
-    url += `onlyMine=${mine}&`;
-    url += `page=${page}&`;
-    url += `size=${size}`;
+    url += `scheduledVisits=${requestData.scheduled}&`;
+    url += `onlyMine=${requestData.mine}&`;
+    url += `page=${requestData.page}&`;
+    url += `size=${requestData.size}`;
 
     const token = JSON.parse(localStorage.getItem('token'));
 

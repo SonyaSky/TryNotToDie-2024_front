@@ -43,7 +43,6 @@ function setInspections() {
     getInspections()
     .then((inspectionsData) => {
         console.log(inspectionsData); 
-        //inspections = inspectionsData.inspections;
         count = inspectionsData.pagination.count;
         setupPagination();
         inspectionsData.inspections.forEach((element) => {
@@ -53,10 +52,10 @@ function setInspections() {
 }
 
 function setupPagination() {
-    // while (pagination_list.firstChild) {
-    //     pagination_list.removeChild(pagination_list.firstChild);
-    // }
-    //if (count == 0) NoIspections();
+    if (count == 0) {
+        noIspections();
+        return;
+    }
     const prev = document.createElement("li");
     prev.className = 'page-item';
     const atr = document.createElement("a");
@@ -111,6 +110,16 @@ function createButton(page) {
 
     })
     return button;
+}
+
+function noIspections() {
+    const div = document.createElement("div");
+    div.className = 'col-12';
+    const p = document.createElement("p");
+    p.className = 'fs-3 text-center';
+    p.innerHTML = "Таких осмотров нет :(";
+    div.appendChild(p);
+    inspections_list.appendChild(div);
 }
 
 
@@ -212,8 +221,22 @@ function makeInspection(data) {
     name.appendChild(document.createTextNode(' Амбулаторный осмотр'));
     title.appendChild(name);
 
+    const div2 = document.createElement("div");
+    div2.className = 'd-flex align-items-center ms-auto me-3';
+    const ref2 = document.createElement("a");
+    ref2.className = 'text-decoration-none';
+    ref2.href = '#';
+    const img2 = document.createElement("img");
+    img2.src = "images/search.svg";
+    img2.alt = "Search Icon";
+    img2.className = "me-2";
+    ref2.appendChild(img2);
+    ref2.appendChild(document.createTextNode('Детали осмотра'));
+    div2.appendChild(ref2);
+
     //потом нужно нормальные ссылки поставить!!!
     if (data.conclusion != 'Death') {
+        div2.className = 'd-flex align-items-center';
         const div1 = document.createElement("div");
         div1.className = 'd-flex align-items-center ms-auto me-3';
         const ref1 = document.createElement("a");
@@ -229,29 +252,39 @@ function makeInspection(data) {
         title.appendChild(div1);
     }
 
-    const div2 = document.createElement("div");
-    div2.className = 'd-flex align-items-center';
-    const ref2 = document.createElement("a");
-    ref2.className = 'text-decoration-none';
-    ref2.href = '#';
-    const img2 = document.createElement("img");
-    img2.src = "images/search.svg";
-    img2.alt = "Search Icon";
-    img2.className = "me-2";
-    ref2.appendChild(img2);
-    ref2.appendChild(document.createTextNode('Детали осмотра'));
-    div2.appendChild(ref2);
     title.appendChild(div2);
     patient.appendChild(title);
 
+
     const p1 = document.createElement("p");
     p1.className = "fs-6";
-    p1.innerHTML = `Заключение: ${data.conclusion}`;
+    switch (data.conclusion) {
+        case "Recovery":
+            p1.innerHTML = 'Заключение: выздоровление';
+            break;
+        case "Disease":
+            p1.innerHTML = 'Заключение: болезнь';
+            break;
+        case "Death":
+            p1.innerHTML = 'Заключение: ';
+            const sp = document.createElement("span");
+            sp.innerHTML = 'смерть';
+            sp.classList.add('fw-medium');
+            p1.appendChild(sp);
+            break;
+        default:
+            p1.innerHTML = 'Заключение: фигня какая-то';
+            break;
+    }
     patient.appendChild(p1);
     
     const p2 = document.createElement("p");
     p2.className = "fs-6";
-    p2.innerHTML = `Основной диагноз: ${data.diagnosis.name} (${data.diagnosis.code})`;
+    p2.innerHTML = 'Основной диагноз: ';
+    const sp = document.createElement("span");
+    sp.innerHTML = `${data.diagnosis.name} (${data.diagnosis.code})`;
+    sp.classList.add('fw-medium');
+    p2.appendChild(sp);
     patient.appendChild(p2);
 
     const p3 = document.createElement("p");
@@ -262,11 +295,5 @@ function makeInspection(data) {
 
     col.appendChild(patient);
     inspections_list.appendChild(col);
-
-    // patient.addEventListener('click', () => {
-    //     console.log(data);
-    //     localStorage.setItem('patientData', JSON.stringify(data));
-    //     window.location.href = "patient.html";
-    // })
 
 }

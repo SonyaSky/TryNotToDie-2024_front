@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="filters">
-            <form class="row">
+            <form class="row" id="filter-form">
                 <div class="row mb-3">
                     <p class="fs-4 fw-bold">Фильтры и сортировка</p>
                 <div class="col-md-6">
@@ -84,11 +84,11 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputСonclusion" class="form-label text-body-secondary">Имеющиеся заключения</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="select">
                         <option value="" disabled selected hidden class="choose">Выберите заключения</option>
-                        <option value="1">Болезнь</option>
-                        <option value="2">Выздоровление</option>
-                        <option value="3">Смерть</option>
+                        <option value="Disease">Болезнь</option>
+                        <option value="Recovery">Выздоровление</option>
+                        <option value="Death">Смерть</option>
                     </select>
                 </div>
                 </div>
@@ -107,23 +107,20 @@
                     </div>
                     <div class="col-md-4 ">
                         <label for="inputSort" class="form-label text-body-secondary">Сортировка пациентов</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option value="1" selected>По имени (А-Я)</option>
-                            <option value="2">По имени (Я-А)</option>
-                            <option value="3">По дате создания (сначала новые)</option>
-                            <option value="4">По дате создания (сначала старые)</option>
-                            <option value="5">По дате осмотров (сначала новые)</option>
-                            <option value="6">По дате осмотров (сначала старые)</option>
+                        <select class="form-select" aria-label="Default select example" id="sorting">
+                            <option value="NameAsc" selected>По имени (А-Я)</option>
+                            <option value="NameDesc">По имени (Я-А)</option>
+                            <option value="CreateAsc">По дате создания (сначала новые)</option>
+                            <option value="CreateDesc">По дате создания (сначала старые)</option>
+                            <option value="InspectionAsc">По дате осмотров (сначала новые)</option>
+                            <option value="InspectionDesc">По дате осмотров (сначала старые)</option>
                         </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="d-flex flex-column" style="width: fit-content;">
                         <label for="inputPatientsQuantity" class="form-label text-body-secondary">Число пациентов на странице</label>
-                        <select class="form-select" aria-label="Default select example" id="inputPatientsQuantity">
-                            <option value="1" selected>5</option>
-                            <option value="2">...</option>
-                        </select>
+                        <input type="number" id="patientCount" class="form-control" min="1" placeholder="Введите количество" value="5"/>
                     </div>
                     <div class="col align-self-end text-end">
                         <button class="btn btn-primary " type="submit" id="search-button">
@@ -135,6 +132,9 @@
         </div>
         <div class="container">
             <div class="row gx-3 gy-3" id="patients-list">
+                <!-- <div class="col-12">
+                    <p class="fs-3 text-center"> Таких пациентов нет :(</p>
+                </div> -->
                 <!-- <div class="col-12 col-xl-6">
                     <div class="patient">
                         <p class="fs-5 fw-bold"> Name</p>
@@ -161,9 +161,9 @@
         </div>
     </div>
     
-    <nav aria-label="Page navigation">
-        <ul id="pagination-controls" class="pagination justify-content-center">
-            
+    <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pages">
+          <!-- <li class="page-item"><a class="page-link" href="#">1</a></li> -->
         </ul>
     </nav>
 

@@ -114,3 +114,7 @@ form {
 .page-link:hover {
     background-color: #ffefe8;
 }
+
+.page-item.active .page-link:hover {
+    background-color: #023dff; 
+}

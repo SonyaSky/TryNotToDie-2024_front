@@ -111,3 +111,21 @@ form {
 .modal-content {
     padding: 0.3rem 0.7rem;
 }
+
+
+
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0rem;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+.page-link:hover {
+    background-color: #ffefe8;
+}
