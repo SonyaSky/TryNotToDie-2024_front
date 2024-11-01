@@ -5,10 +5,16 @@ const patient_birthday = document.getElementById("birthdayData");
 const patient_gender = document.getElementById("gender-icon");
 const pagination_list = document.getElementById("pages");
 
+//id, grouped, icdRoots, page, size
 var icd10roots = [];
-var current_page = 1;
-var current_size = 5;
-var count = 1;
+var requestData = {
+    id: "",
+    grouped: false,
+    icdRoots: "",
+    page: 1,
+    size: 5
+}
+var count;
 
 window.load = setInspections();
 
@@ -20,6 +26,7 @@ function setInspections() {
 
     const patientData = JSON.parse(localStorage.getItem('patientData'));
     console.log(patientData);
+    requestData.id = patientData.id;
     patient_name.innerHTML = patientData.name;
     const date = new Date(patientData.birthday);
     patient_birthday.textContent = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
@@ -33,7 +40,7 @@ function setInspections() {
         populateSelect(); 
     });
 
-    getInspections(patientData.id, false, "", 1, 5)
+    getInspections()
     .then((inspectionsData) => {
         console.log(inspectionsData); 
         //inspections = inspectionsData.inspections;
@@ -78,11 +85,31 @@ function setupPagination() {
 function createButton(page) {
     const button = document.createElement("li");
     button.className = 'page-item';
-    if (page == current_page) button.classList.add('active');
+    if (page == requestData.page) button.classList.add('active');
     const atr = document.createElement("a");
     atr.className = 'page-link';
     atr.innerHTML = page;
     button.appendChild(atr);
+
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const current_btn = document.querySelector('li.page-item.active');
+		current_btn.classList.remove('active');
+        requestData.page = page;
+        button.classList.add('active');
+        while (inspections_list.firstChild) {
+            inspections_list.removeChild(inspections_list.firstChild);
+        }
+
+        getInspections()
+        .then((inspectionsData) => {
+            console.log(inspectionsData);
+            inspectionsData.inspections.forEach((element) => {
+                makeInspection(element);
+            });
+    });
+
+    })
     return button;
 }
 
@@ -128,13 +155,13 @@ function findDiseaseId(name) {
 
 
 //https://mis-api.kreosoft.space/api/patient/39abadc7-9656-4d74-bd7e-28e927a1f81b/inspections?grouped=false&icdRoots=bd483a09-e537-4b61-9422-2e290aa2eb5c&page=1&size=5
-function getInspections(id, grouped, icdRoots, page, size) {
-    var url = `https://mis-api.kreosoft.space/api/patient/${id}/inspections?grouped=${grouped}&`;
-    if (icdRoots != "") {
+function getInspections() {
+    var url = `https://mis-api.kreosoft.space/api/patient/${requestData.id}/inspections?grouped=${requestData.grouped}&`;
+    if (requestData.icdRoots != "") {
         url += `icdRoots=${icdRoots}&`;
     }
-    url += `page=${page}&`;
-    url += `size=${size}`;
+    url += `page=${requestData.page}&`;
+    url += `size=${requestData.size}`;
 
     const token = JSON.parse(localStorage.getItem('token'));
 
