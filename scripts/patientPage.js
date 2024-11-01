@@ -52,6 +52,9 @@ function setInspections() {
 }
 
 function setupPagination() {
+    while (pagination_list.firstChild) {
+        pagination_list.removeChild(pagination_list.firstChild);
+    }
     if (count == 0) {
         noIspections();
         return;
@@ -63,13 +66,36 @@ function setupPagination() {
     atr.ariaLabel = "Previous";
     atr.innerHTML = "&lt;";
     prev.appendChild(atr);
+    if (requestData.page < 6) {
+        prev.classList.add('disabled');
+    }
+    else {
+        prev.addEventListener('click', (e) => {
+            e.preventDefault();
+            requestData.page = (Math.ceil(requestData.page/5) - 1)*5 - 4;
+            while (patients_list.firstChild) {
+                patients_list.removeChild(patients_list.firstChild);
+            }
+            getPatients()
+            .then((patientsData) => {
+                console.log(patientsData); 
+                setupPagination();
+                patientsData.patients.forEach((element) => {
+                    makePatient(element);
+                });
+            });
+        });
+    }
+
     pagination_list.appendChild(prev);
 
-
-    for (var i = 1; i < count + 1; i++) {
+    var i = requestData.page;
+    while (i <= count && i-requestData.page < 5) {
         const btn = createButton(i);
         pagination_list.appendChild(btn);
+        i++;
     }
+
     const next = document.createElement("li");
     next.className = 'page-item';
     const atr1 = document.createElement("a");
@@ -77,8 +103,27 @@ function setupPagination() {
     atr1.ariaLabel = "Next";
     atr1.innerHTML = "&gt;";
     next.appendChild(atr1);
+    if (count - requestData.page < 6) {
+        next.classList.add('disabled');
+    }
+    else {
+        next.addEventListener('click', (e) => {
+            e.preventDefault();
+            requestData.page = Math.ceil(requestData.page/5)*5 + 1;
+            while (patients_list.firstChild) {
+                patients_list.removeChild(patients_list.firstChild);
+            }
+            getPatients()
+            .then((patientsData) => {
+                console.log(patientsData); 
+                setupPagination();
+                patientsData.patients.forEach((element) => {
+                    makePatient(element);
+                });
+            });
+        });
+    }
     pagination_list.appendChild(next);
-
 }
 
 function createButton(page) {

@@ -46,12 +46,12 @@ function setPatients() {
 }
 
 function setupPagination() {
+    while (pagination_list.firstChild) {
+        pagination_list.removeChild(pagination_list.firstChild);
+    }
     if (count == 0) {
         noPatients();
         return;
-    }
-    while (pagination_list.firstChild) {
-        pagination_list.removeChild(pagination_list.firstChild);
     }
     const prev = document.createElement("li");
     prev.className = 'page-item';
@@ -60,13 +60,36 @@ function setupPagination() {
     atr.ariaLabel = "Previous";
     atr.innerHTML = "&lt;";
     prev.appendChild(atr);
+    if (requestData.page < 6) {
+        prev.classList.add('disabled');
+    }
+    else {
+        prev.addEventListener('click', (e) => {
+            e.preventDefault();
+            requestData.page = (Math.ceil(requestData.page/5) - 1)*5 - 4;
+            while (patients_list.firstChild) {
+                patients_list.removeChild(patients_list.firstChild);
+            }
+            getPatients()
+            .then((patientsData) => {
+                console.log(patientsData); 
+                setupPagination();
+                patientsData.patients.forEach((element) => {
+                    makePatient(element);
+                });
+            });
+        });
+    }
+
     pagination_list.appendChild(prev);
 
-
-    for (var i = 1; i < count + 1; i++) {
+    var i = requestData.page;
+    while (i <= count && i-requestData.page < 5) {
         const btn = createButton(i);
         pagination_list.appendChild(btn);
+        i++;
     }
+
     const next = document.createElement("li");
     next.className = 'page-item';
     const atr1 = document.createElement("a");
@@ -74,6 +97,26 @@ function setupPagination() {
     atr1.ariaLabel = "Next";
     atr1.innerHTML = "&gt;";
     next.appendChild(atr1);
+    if (count - requestData.page < 6) {
+        next.classList.add('disabled');
+    }
+    else {
+        next.addEventListener('click', (e) => {
+            e.preventDefault();
+            requestData.page = Math.ceil(requestData.page/5)*5 + 1;
+            while (patients_list.firstChild) {
+                patients_list.removeChild(patients_list.firstChild);
+            }
+            getPatients()
+            .then((patientsData) => {
+                console.log(patientsData); 
+                setupPagination();
+                patientsData.patients.forEach((element) => {
+                    makePatient(element);
+                });
+            });
+        });
+    }
     pagination_list.appendChild(next);
 
 }
@@ -116,7 +159,7 @@ function noPatients() {
     p.className = 'fs-3 text-center';
     p.innerHTML = "Таких пациентов нет :(";
     div.appendChild(p);
-    inspections_list.appendChild(div);
+    patients_list.appendChild(div);
 }
 
 
@@ -159,7 +202,7 @@ function getPatients() {
         url += `conclusions=${requestData.conclusions}&`;
     }
     if (requestData.sorting != "") {
-        url += `sorting=${requestData.name}&`;
+        url += `sorting=${requestData.sorting}&`;
     }
     url += `scheduledVisits=${requestData.scheduled}&`;
     url += `onlyMine=${requestData.mine}&`;
