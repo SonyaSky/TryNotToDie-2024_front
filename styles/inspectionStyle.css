@@ -1,0 +1,40 @@
+.btn {
+    background-color: #3d7db8;
+}
+
+.btn:hover {
+    background-color: #336DA2;
+}
+
+#my-container {
+    padding-top: 1rem;
+    margin: 0 auto;
+    width: 70%;
+}
+
+.title {
+    padding: 1rem 1.2rem;
+    background-color: #f7f6fc;
+}
+
+.fs-6 {
+    margin-bottom: 3px;
+}
+
+.info, .title-info {
+    color: #b2bbc2;
+}
+
+.title-info {
+    margin-top: 15px;
+}
+
+#edit-inspections-button {
+    padding: 0.3rem 1.2rem;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.fs-2, .fs-4 {
+    color: #193f76;
+}

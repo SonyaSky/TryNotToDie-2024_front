@@ -69,10 +69,20 @@ profile_form.addEventListener('submit', (e) => {
     };
 
     let token = JSON.parse(localStorage.getItem('token'));
-    localStorage.setItem('profileData', JSON.stringify(editedProfile));
-    console.log(token);
+    editProfile(editedProfile, token)
+    .then((data) => {
+        localStorage.setItem('profileData', JSON.stringify(editProfile)); 
+        console.log(token);
+        setProfile(); 
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+        if (error.message.includes('Username') && error.message.includes('is already taken')) {
+            alert('Пользователь с таким email уже существует');
+        }
+    });
     setProfile();
-    editProfile(editedProfile, token);
+
 })
 
 
@@ -86,15 +96,18 @@ function editProfile(newProfile, token) {
         body: JSON.stringify(newProfile),
       })
       .then(response => {
-        console.log('Response Status:', response.status);
-        return response.text(); 
-      })
-      .then(data => {
-        console.log('Parsed Data:', data);
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                console.error('Error response body:', errorData.errors);
+                throw new Error(errorData.message || 'Network response was not ok');
+            });
+        }
+        return response.json();
       })
       .catch(error => {
-        console.error('Error:', error);
-      });
+        console.error('Error:', error.message);
+        throw error; 
+    });
 }
 
 function formatPhoneNumber(phoneNumberString) {
