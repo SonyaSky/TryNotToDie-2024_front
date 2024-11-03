@@ -32,17 +32,8 @@ function setPatients() {
     var profileData = JSON.parse(localStorage.getItem('profileData')); 
     console.log(profileData);
     profile_name.textContent = profileData.name;
-
-    getPatients()
-    .then((patientsData) => {
-        console.log(patientsData); 
-        count = patientsData.pagination.count;
-        setupPagination();
-        patientsData.patients.forEach((element) => {
-            makePatient(element);
-        });
-    });
-    
+    loadFormState();
+    filterPatients();
 }
 
 function setupPagination() {
@@ -97,7 +88,7 @@ function setupPagination() {
     atr1.ariaLabel = "Next";
     atr1.innerHTML = "&gt;";
     next.appendChild(atr1);
-    if (count - requestData.page < 6) {
+    if (requestData.page + 5 > count) {
         next.classList.add('disabled');
     }
     else {
@@ -162,9 +153,40 @@ function noPatients() {
     patients_list.appendChild(div);
 }
 
+function saveFormState() {
+    const formState = {
+        name: input_name.value,
+        conclusions: select_conslusion.value,
+        scheduled: planned_check.checked,
+        mine: my_patients.checked,
+        sorting: select_sorting.value,
+        size: patients_count.value
+    };
+    localStorage.setItem('filterPatientsState', JSON.stringify(formState));
+}
+
+
+function loadFormState() {
+    const savedState = localStorage.getItem('filterPatientsState');
+    if (savedState) {
+        const formState = JSON.parse(savedState);
+        input_name.value = formState.name || '';
+        select_conslusion.value = formState.conclusions || '';
+        planned_check.checked = formState.scheduled || false;
+        my_patients.checked = formState.mine || false;
+        select_sorting.value = formState.sorting || '';
+        patients_count.value = formState.size || '';
+    }
+}
+
 
 filter_form.addEventListener('submit', (e) => {
     e.preventDefault();
+    saveFormState();
+    filterPatients();
+})
+
+function filterPatients() {
     requestData.name = input_name.value;
     requestData.conclusions = select_conslusion.value;
     requestData.scheduled = planned_check.checked;
@@ -186,9 +208,7 @@ filter_form.addEventListener('submit', (e) => {
             makePatient(element);
         });
     });
-})
-
-
+}
 
 
 

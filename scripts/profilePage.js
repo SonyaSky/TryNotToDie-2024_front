@@ -26,6 +26,16 @@ function setProfile() {
     else {
         input_gender.value = "Мужской";
     }
+    const formState = {
+        name: "",
+        conclusions: "",
+        sorting: "",
+        scheduled: false, 
+        mine: true,
+        page: 1,
+        size: 5
+    };
+    localStorage.setItem('filterPatientsState', JSON.stringify(formState));
 }
 
 profile_form.addEventListener('submit', (e) => {

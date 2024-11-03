@@ -5,7 +5,12 @@ const patient_birthday = document.getElementById("birthdayData");
 const patient_gender = document.getElementById("gender-icon");
 const pagination_list = document.getElementById("pages");
 
-//id, grouped, icdRoots, page, size
+const filter_form = document.getElementById('filter-form');
+const input_icdroot = document.getElementById('icd-10');
+const grouped = document.getElementById('grouped');
+const patients_count = document.getElementById('patientCount');
+
+
 var icd10roots = [];
 var requestData = {
     id: "",
@@ -46,7 +51,8 @@ function setInspections() {
         count = inspectionsData.pagination.count;
         setupPagination();
         inspectionsData.inspections.forEach((element) => {
-            makeInspection(element);
+            const col = makeInspection(element);
+            inspections_list.appendChild(col);
         });
     });
 }
@@ -149,7 +155,8 @@ function createButton(page) {
         .then((inspectionsData) => {
             console.log(inspectionsData);
             inspectionsData.inspections.forEach((element) => {
-                makeInspection(element);
+                const col = makeInspection(element);
+                inspections_list.appendChild(col);
             });
     });
 
@@ -197,14 +204,15 @@ function populateSelect() {
     icd10roots.forEach(option => {
         const opt = document.createElement('option');
         opt.textContent = option.name;
+        opt.value = option.id;
         selectElement.appendChild(opt);
     });
 
 }
 
-function findDiseaseId(name) {
-    return icd10roots.find(disease => disease.name == name).id;
-}
+// function findDiseaseId(name) {
+//     return icd10roots.find(disease => disease.name == name).id;
+// }
 
 
 
@@ -212,7 +220,7 @@ function findDiseaseId(name) {
 function getInspections() {
     var url = `https://mis-api.kreosoft.space/api/patient/${requestData.id}/inspections?grouped=${requestData.grouped}&`;
     if (requestData.icdRoots != "") {
-        url += `icdRoots=${icdRoots}&`;
+        url += `icdRoots=${requestData.icdRoots}&`;
     }
     url += `page=${requestData.page}&`;
     url += `size=${requestData.size}`;
@@ -240,8 +248,34 @@ function getInspections() {
     });
 }
 
+filter_form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    requestData.icdRoots = input_icdroot.value;
+    requestData.page = 1;
+    requestData.size = patients_count.value;
+    requestData.grouped = grouped.checked;
+    console.log(requestData);
+    while (inspections_list.firstChild) {
+        inspections_list.removeChild(inspections_list.firstChild);
+    }
+
+    getInspections()
+    .then((inspectionsData) => {
+        console.log(inspectionsData); 
+        count = inspectionsData.pagination.count;
+        setupPagination();
+        inspectionsData.inspections.forEach((element) => {
+            const col = makeInspection(element);
+            inspections_list.appendChild(col);
+        });
+    });
+    
+})
+
+
 
 function makeInspection(data) {
+
     const col = document.createElement("div");
     col.classList.add("col-12");
     //col.classList.add("col-lg-6");
@@ -255,6 +289,41 @@ function makeInspection(data) {
 
     const title = document.createElement("div");
     title.className = 'd-flex align-items-center';
+
+    if (requestData.grouped) {
+        const open_button = document.createElement("button");
+        open_button.className = "btn btn-primary me-3 open-button align-self-start";
+        open_button.type = 'button';
+        const button_image = document.createElement("img");
+        if (data.hasNested == true) {
+            button_image.src = "images/plus.svg";
+            button_image.alt = "+";
+        }
+        else {
+            button_image.src = "images/dash.svg";
+            button_image.alt = "-";
+        }
+        open_button.appendChild(button_image);
+        title.appendChild(open_button);
+        if (data.hasChain ) {
+            open_button.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (button_image.alt == "+") {
+                    chainInspections(data, col);
+                    button_image.src = "images/dash.svg";
+                    button_image.alt = "-";
+                }
+                else {
+                    button_image.src = "images/plus.svg";
+                    button_image.alt = "+";
+                    const ch_ins = col.querySelector(".child-inspections");
+                    if (ch_ins) {
+                        ch_ins.remove();
+                    }
+                }
+            })
+        }
+    }
 
     const name = document.createElement("p");
     name.className = 'fs-5 fw-bold me-3';
@@ -280,7 +349,7 @@ function makeInspection(data) {
     div2.appendChild(ref2);
 
     //потом нужно нормальные ссылки поставить!!!
-    if (data.conclusion != 'Death') {
+    if (data.conclusion != 'Death' && data.hasNested == false) {
         div2.className = 'd-flex align-items-center';
         const div1 = document.createElement("div");
         div1.className = 'd-flex align-items-center ms-auto me-3';
@@ -337,8 +406,83 @@ function makeInspection(data) {
     p3.innerHTML = `Медицинский работник: ${data.doctor}`;
     patient.appendChild(p3);
 
-
     col.appendChild(patient);
-    inspections_list.appendChild(col);
+ 
+    return col;
+}
 
+function chainInspections(data, col) {
+    const child_insp_div = document.createElement("div");
+    child_insp_div.className = "child-inspections row gx-3 gy-3";
+
+    var child_inspections = [];
+    getChildInspections(data.id)
+    .then((inspectionsData) => {
+        child_inspections = inspectionsData;
+        console.log(child_inspections);
+        inspectionsData.forEach((element) => {
+            if (element.previousId == data.id) {
+                const child_col = makeInspection(element);
+                child_insp_div.appendChild(child_col);
+                if (element.hasNested) {
+                    const child_open_button = child_col.querySelector(".open-button");
+                    const child_button_image = child_col.querySelector("img");
+                    child_open_button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (child_button_image.alt == "+") {
+                            chainInspectionsRecursively(element, child_col, child_inspections);
+                            child_button_image.src = "images/dash.svg";
+                            child_button_image.alt = "-";
+                        }
+                        else {
+                            child_button_image.src = "images/plus.svg";
+                            child_button_image.alt = "+";
+                            const ch_ins = child_col.querySelector(".child-inspections");
+                            if (ch_ins) {
+                                ch_ins.remove();
+                            }
+                        }
+                    })
+                }
+            }
+        });
+        col.appendChild(child_insp_div);
+         
+    });
+}
+
+function chainInspectionsRecursively(parentData, parentCol, list) {
+    const child_insp_div = document.createElement("div");
+    child_insp_div.className = "child-inspections row gx-3 gy-3";
+    list.forEach((el) => {
+        if (el.previousId == parentData.id) {
+            const child_col = makeInspection(el);
+            child_insp_div.appendChild(child_col);
+        }
+    });
+    parentCol.appendChild(child_insp_div);
+}
+
+function getChildInspections(id) {
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    return fetch(`https://mis-api.kreosoft.space/api/inspection/${id}/chain`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json(); 
+    })
+    .then((data) => {
+        return data;
+    })
+    .catch((error) => {
+        console.error('Error fetching data:', error); 
+    });
 }

@@ -79,18 +79,18 @@
             </div>
         </div>
         <div class="filters">
-            <form class="row">
+            <form class="row" id="filter-form">
                 <div class="row mb-3">           
                 <div class="col-6">
                     <label for="inputСonclusion" class="form-label text-body-secondary">МКБ-10</label>
                     <select class="form-select" aria-label="Default select example" id="icd-10">
                         <option value="" disabled selected hidden>Выбрать</option>
-                        <option> --</option>
+                        <option value = ""> --</option>
                     </select>
                 </div>
                 <div class="col-3 align-self-end">
                     <div class="form-check">
-                        <input class="form-check-input align-self-center" type="radio" name="gridRadios" id="gridRadios1" value="option1">
+                        <input class="form-check-input align-self-center" type="radio" name="gridRadios" id="grouped" value="option1">
                         <label class="form-check-label" for="gridRadios1">
                           Сгруппировать по повторным
                         </label>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-3 align-self-end">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" checked>
+                        <input class="form-check-input" type="radio" name="gridRadios" id="show_all" value="option2" checked>
                         <label class="form-check-label" for="gridRadios2">
                           Показать все
                         </label>
@@ -181,26 +181,19 @@
                 </div>
             </div> -->
             <!-- <div class="col-12">
-                <div class="patient">
-                    <div class="d-flex align-items-center justify-content-between">
+                <div class="patient parent">
+                    <div class="d-flex align-items-center">
                         <button class="btn btn-primary me-3 open-button align-self-start " type="button">
                             <img src="images/plus.svg" alt="plus" />
                         </button>
-                        <p class="fs-5 fw-bold me-3 text-end"> 
+                        <p class="fs-5 fw-bold me-3"> 
                             <span class="badge text-bg-secondary fw-medium">25.06.2022</span> Амбулаторный осмотр
                         </p>
                         
-                        <div class="d-flex align-items-center ms-auto me-3 text-end">
+                        <div class="d-flex align-items-center ms-auto me-3">
                             <a href="#" class="text-decoration-none">
                                 <img src="/images/edit.svg" alt="Edit Icon" class="me-2" />
                                 Добавить осмотр
-                            </a>
-                        </div>
-                        
-                        <div class="d-flex align-items-center text-end">
-                            <a href="#" class="text-decoration-none">
-                                <img src="images/search.svg" alt="Search Icon" class="me-2" />
-                                Детали осмотра
                             </a>
                         </div>
                     </div>
@@ -214,42 +207,84 @@
                         Медицинский работник: Фамилия Имя Отчество
                     </p>
                 </div>
-            </div>
-            <div class="col-12">
-                <div class="patient child">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <button class="btn btn-primary me-3 open-button align-self-start " type="button">
-                            <img src="images/plus.svg" alt="plus" />
-                        </button>
-                        <p class="fs-5 fw-bold me-3 text-end"> 
-                            <span class="badge text-bg-secondary fw-medium">25.06.2022</span> Амбулаторный осмотр
-                        </p>
-                        
-                        <div class="d-flex align-items-center ms-auto me-3 text-end">
-                            <a href="#" class="text-decoration-none">
-                                <img src="/images/edit.svg" alt="Edit Icon" class="me-2" />
-                                Добавить осмотр
-                            </a>
+                <div class="child-inspections row gx-3 gy-3">
+                    <div class="col-12">
+                        <div class="patient">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <button class="btn btn-primary me-3 open-button align-self-start " type="button">
+                                    <img src="images/plus.svg" alt="plus" />
+                                </button>
+                                <p class="fs-5 fw-bold me-3 text-end"> 
+                                    <span class="badge text-bg-secondary fw-medium">25.06.2022</span> Амбулаторный осмотр
+                                </p>
+                                
+                                <div class="d-flex align-items-center ms-auto me-3 text-end">
+                                    <a href="#" class="text-decoration-none">
+                                        <img src="/images/edit.svg" alt="Edit Icon" class="me-2" />
+                                        Добавить осмотр
+                                    </a>
+                                </div>
+                                
+                                <div class="d-flex align-items-center text-end">
+                                    <a href="#" class="text-decoration-none">
+                                        <img src="images/search.svg" alt="Search Icon" class="me-2" />
+                                        Детали осмотра
+                                    </a>
+                                </div>
+                            </div>
+                            <p class="fs-6">
+                                Заключение: болезнь
+                            </p>
+                            <p class="fs-6">
+                                Основной диагноз: что-то там на медицинском (М42)
+                            </p>
+                            <p class="fs-6 info">
+                                Медицинский работник: Фамилия Имя Отчество
+                            </p>
                         </div>
-                        
-                        <div class="d-flex align-items-center text-end">
-                            <a href="#" class="text-decoration-none">
-                                <img src="images/search.svg" alt="Search Icon" class="me-2" />
-                                Детали осмотра
-                            </a>
+                        <div class="child-inspections row gx-3 gy-3">
+                            <div class="col-12">
+                                <div class="patient">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <button class="btn btn-primary me-3 open-button align-self-start " type="button">
+                                            <img src="images/plus.svg" alt="plus" />
+                                        </button>
+                                        <p class="fs-5 fw-bold me-3 text-end"> 
+                                            <span class="badge text-bg-secondary fw-medium">25.06.2022</span> Амбулаторный осмотр
+                                        </p>
+                                        
+                                        <div class="d-flex align-items-center ms-auto me-3 text-end">
+                                            <a href="#" class="text-decoration-none">
+                                                <img src="/images/edit.svg" alt="Edit Icon" class="me-2" />
+                                                Добавить осмотр
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="d-flex align-items-center text-end">
+                                            <a href="#" class="text-decoration-none">
+                                                <img src="images/search.svg" alt="Search Icon" class="me-2" />
+                                                Детали осмотра
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="fs-6">
+                                        Заключение: болезнь
+                                    </p>
+                                    <p class="fs-6">
+                                        Основной диагноз: что-то там на медицинском (М42)
+                                    </p>
+                                    <p class="fs-6 info">
+                                        Медицинский работник: Фамилия Имя Отчество
+                                    </p>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
-                    <p class="fs-6">
-                        Заключение: болезнь
-                    </p>
-                    <p class="fs-6">
-                        Основной диагноз: что-то там на медицинском (М42)
-                    </p>
-                    <p class="fs-6 info">
-                        Медицинский работник: Фамилия Имя Отчество
-                    </p>
                 </div>
+                
             </div> -->
+            
         </div>
         </div>
         <nav aria-label="Page navigation example">

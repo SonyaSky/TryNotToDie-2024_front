@@ -89,8 +89,9 @@ form {
     display: flex;
 }
 
-.child {
+.child-inspections {
     margin-left: 3rem;
+    margin-top: 0rem;
 }
 
 #gender-icon {
