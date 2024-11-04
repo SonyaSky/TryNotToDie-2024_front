@@ -79,15 +79,15 @@ function setupPagination() {
         prev.addEventListener('click', (e) => {
             e.preventDefault();
             requestData.page = (Math.ceil(requestData.page/5) - 1)*5 - 4;
-            while (patients_list.firstChild) {
-                patients_list.removeChild(patients_list.firstChild);
+            while (inspections_list.firstChild) {
+                inspections_list.removeChild(inspections_list.firstChild);
             }
-            getPatients()
-            .then((patientsData) => {
-                console.log(patientsData); 
-                setupPagination();
-                patientsData.patients.forEach((element) => {
-                    makePatient(element);
+            getInspections()
+            .then((inspectionsData) => {
+                console.log(inspectionsData);
+                inspectionsData.inspections.forEach((element) => {
+                    const col = makeInspection(element);
+                    inspections_list.appendChild(col);
                 });
             });
         });
@@ -116,15 +116,15 @@ function setupPagination() {
         next.addEventListener('click', (e) => {
             e.preventDefault();
             requestData.page = Math.ceil(requestData.page/5)*5 + 1;
-            while (patients_list.firstChild) {
-                patients_list.removeChild(patients_list.firstChild);
+            while (inspections_list.firstChild) {
+                inspections_list.removeChild(inspections_list.firstChild);
             }
-            getPatients()
-            .then((patientsData) => {
-                console.log(patientsData); 
-                setupPagination();
-                patientsData.patients.forEach((element) => {
-                    makePatient(element);
+            getInspections()
+            .then((inspectionsData) => {
+                console.log(inspectionsData);
+                inspectionsData.inspections.forEach((element) => {
+                    const col = makeInspection(element);
+                    inspections_list.appendChild(col);
                 });
             });
         });
@@ -339,7 +339,7 @@ function makeInspection(data) {
     div2.className = 'd-flex align-items-center ms-auto me-3';
     const ref2 = document.createElement("a");
     ref2.className = 'text-decoration-none';
-    ref2.href = '#';
+    ref2.href = 'inspection.html';
     const img2 = document.createElement("img");
     img2.src = "images/search.svg";
     img2.alt = "Search Icon";
@@ -347,6 +347,10 @@ function makeInspection(data) {
     ref2.appendChild(img2);
     ref2.appendChild(document.createTextNode('Детали осмотра'));
     div2.appendChild(ref2);
+
+    ref2.addEventListener('click', () => {
+        localStorage.setItem('inspectionId', JSON.stringify(data.id));
+    });
 
     //потом нужно нормальные ссылки поставить!!!
     if (data.conclusion != 'Death' && data.hasNested == false) {

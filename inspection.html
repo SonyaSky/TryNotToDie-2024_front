@@ -80,7 +80,7 @@
                         Дата рождения: <span id="birthdayData"> дата </span>
                     </p>
                     <p class="fs-6 title-info">
-                        Медицинский работник: Фамилия Имя Отчество
+                        Медицинский работник: <span id="doctorData">Фамилия Имя Отчество</span>
                     </p>
                 </div>
             </div>
@@ -91,16 +91,63 @@
             </div>
             <div class="col-12 title">
                 <p class="fs-4 fw-medium">Анамнез заболевания</p>
-                <p class="fs-6" id="complaints"> Что-то в животе болит, пациент умирает. Аааааааааааааааа </p>
+                <p class="fs-6" id="anamnesis"> Что-то в животе болит, пациент умирает. Аааааааааааааааа </p>
+            </div>
+
+            <div class="row gx-3 gy-3" id="consultations">
+                <!-- <div class="col-12 title">
+                    <p class="fs-4 fw-medium">Консультация</p>
+                    <p class="fs-6 fw-bold"> 
+                        Консультант: <span  id="consult"> Хлебодарова Анна Сергеевна </span>
+                    </p>
+                    <p class="fs-6 info">
+                        Специализация консультанта: <span id="specialization"> Психолог </span>
+                    </p>
+                </div>
+    
+                <div class="col-12 title">
+                    <p class="fs-4 fw-medium">Консультация</p>
+                    <p class="fs-6 fw-bold"> 
+                        Консультант: <span  id="consult"> Хлебодарова Анна Сергеевна </span>
+                    </p>
+                    <p class="fs-6 info">
+                        Специализация консультанта: <span id="specialization"> Психолог </span>
+                    </p>
+                    <div class="comments">
+                        <p class="fs-5 fw-bold com"> 
+                            Комментарии
+                        </p>
+                        <div class="border-bottom border-dark-subtle comment">
+                            <p class="fs-6 fw-bold"> 
+                                Абросимова Анна Сергеевна <span class="fs-6 fw-normal info">(психолог)</span>
+                            </p>
+                            <p class="fs-6 comment-text">
+                                Помянем
+                            </p>
+                            <div class="fs-6 d-flex align-items-center">
+                                <div class="info">11.11.2022 15:44</div>
+                                <button type="button" class="comment-btn ms-2">
+                                    Показать ответы (4)
+                                </button>
+                                <button type="button" class="comment-btn ms-2">
+                                    Ответить
+                                </button>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-12 title" id="diagnosis">
+                <p class="fs-4 fw-medium">Диагнозы</p>
+                <p class="fs-6"> Что-то в животе болит, пациент умирает. Аааааааааааааааа </p>
             </div>
             <div class="col-12 title">
-                <p class="fs-4 fw-medium">Консультация</p>
-                <p class="fs-6 fw-bold"> 
-                    Консультант: <span  id="consult"> Хлебодарова Анна Сергеевна </span>
-                </p>
-                <p class="fs-6 info">
-                    Специализация консультанта: <span id="specialization"> Психолог </span>
-                </p>
+                <p class="fs-4 fw-medium">Рекомендации по лечению</p>
+                <p class="fs-6" id="treatment"> Что-то в животе болит, пациент умирает. Аааааааааааааааа </p>
+            </div>
+            <div class="col-12 title" id="conclusion">
+                <p class="fs-4 fw-medium">Заключение</p>
             </div>
         </div>
         
@@ -108,4 +155,6 @@
     </div>
     
 </body>
+<script src="scripts/logout.js"></script>
+<script src="scripts/inspectionPage.js"></script>
 </html>

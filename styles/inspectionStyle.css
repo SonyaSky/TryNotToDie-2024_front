@@ -1,8 +1,8 @@
-.btn {
+.btn-primary {
     background-color: #3d7db8;
 }
 
-.btn:hover {
+.btn-primary:hover {
     background-color: #336DA2;
 }
 
@@ -10,6 +10,7 @@
     padding-top: 1rem;
     margin: 0 auto;
     width: 70%;
+    margin-bottom: 2rem;
 }
 
 .title {
@@ -23,6 +24,7 @@
 
 .info, .title-info {
     color: #b2bbc2;
+    cursor: default;
 }
 
 .title-info {
@@ -37,4 +39,39 @@
 
 .fs-2, .fs-4 {
     color: #193f76;
+}
+
+.comments {
+    margin-top: 1rem;
+}
+
+.comment-text {
+    margin-left: 0.5rem;
+    padding-bottom: 0px;
+}
+
+.comment-btn {
+    color: #193f76;
+    border: none;
+    background-color: transparent;
+}
+
+.comment-btn:hover {
+    color: #336DA2;
+}
+
+.comment-btn:active {
+    border: none;
+}
+
+.com {
+    margin: 0px;
+}
+ 
+p {
+    cursor: default;
+}
+
+#consultations {
+    margin-top: 0px;
 }
