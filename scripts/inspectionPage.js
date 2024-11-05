@@ -8,6 +8,7 @@ const complaints = document.getElementById("complaints");
 const anamnesis = document.getElementById("anamnesis");
 const treatment = document.getElementById("treatment");
 const conclusion = document.getElementById("conclusion");
+const diagnosis = document.getElementById("diagnosis");
 const consultations_list = document.getElementById("consultations");
 
 window.load = setData();
@@ -43,6 +44,10 @@ function setInspection(data) {
     anamnesis.innerHTML = data.anamnesis;
     treatment.innerHTML = data.treatment;
 
+    data.diagnoses.forEach((d) => {
+        makeDiagnosis(d);
+    })
+    
     const conclusionParagraph = document.createElement('p');
     conclusionParagraph.className = 'fs-6 fw-bold';
     switch (data.conclusion) {
@@ -56,7 +61,7 @@ function setInspection(data) {
             conclusionParagraph.innerHTML = 'Смерть';
             break;
         default:
-            p1.innerHTML = 'Заключение: фигня какая-то';
+            conclusionParagraph.innerHTML = 'Заключение: фигня какая-то';
             break;
     }
 
@@ -79,6 +84,40 @@ function formatDate(dateString) {
 
     const formattedDate = `${day}.${month}.${year} &ndash; ${hours}:${minutes}`;
     return formattedDate;
+}
+
+function makeDiagnosis(data) {
+    const diagnosisParagraph = document.createElement('p');
+    diagnosisParagraph.className = 'fs-6 fw-bold';
+    diagnosisParagraph.innerHTML = `(${data.code}) ${data.name}`;
+    const div = document.createElement('div');
+    div.className = "comments";
+    const p1 = document.createElement('p');
+    p1.className = "lh-1 fs-6 info";
+    p1.innerHTML = `Тип в осмотре: ${data.type}`;
+
+    switch (data.type) {
+        case "Main":
+            p1.innerHTML = 'Тип в осмотре: Основной';
+            break;
+        case "Concomitant":
+            p1.innerHTML = 'Тип в осмотре: Сопутствующий';
+            break;
+        case "Complication":
+            p1.innerHTML = 'Тип в осмотре: Осложнение';
+            break;
+        default:
+            p1.innerHTML = 'Тип в осмотре: фигня какая-то';
+            break;
+    }
+
+    const p2 = document.createElement('p');
+    p2.className = "lh-1 fs-6 info";
+    p2.innerHTML = `Расшифровка: ${data.description}`;
+    div.appendChild(p1);
+    div.appendChild(p2);
+    diagnosis.appendChild(diagnosisParagraph);
+    diagnosis.appendChild(div);
 }
 
 
