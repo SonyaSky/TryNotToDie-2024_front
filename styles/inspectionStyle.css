@@ -75,3 +75,12 @@ p {
 #consultations {
     margin-top: 0px;
 }
+
+.types {
+    margin-bottom: 1rem;
+}
+
+.child-comments {
+    margin-left: 2rem;
+    margin-top: 0rem;
+}
