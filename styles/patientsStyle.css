@@ -7,6 +7,15 @@
     margin-right: 5px;
 }
 
+.btn {
+    background-color: #3d7db8;
+    border: none;
+
+}
+
+.btn:hover {
+    background-color: #336DA2;
+}
 
 #add-patient-button {
     background-color: #3d7db8;
@@ -60,11 +69,10 @@ form {
 
 .form-check-input:checked {
     background-color: #327cb9; 
+    border: none;
 }
 
-/* .form-check-input:before {
-    background-color: #ffffff; 
-} */
+
 
 /* Toggle */
 
@@ -113,7 +121,10 @@ form {
     padding: 0.3rem 0.7rem;
 }
 
-
+.right {
+    padding-left: 2rem;
+    padding-bottom: 0.5rem;
+}
 
 .pagination {
     display: flex;

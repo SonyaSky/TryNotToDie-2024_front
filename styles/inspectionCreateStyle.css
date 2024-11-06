@@ -1,0 +1,84 @@
+.btn {
+    background-color: #3d7db8;
+    border: none;
+    border-radius: 3px;
+}
+
+.btn:hover {
+    background-color: #336DA2;
+}
+
+#my-container {
+    margin: 0 auto;
+    width: 70%;
+    margin-bottom: 2rem;
+}
+
+#patient-title {
+    margin: 0rem 1rem;
+}
+
+#gender-icon {
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.title {
+    padding: 1rem 1.2rem;
+    background-color: #f7f6fc;
+}
+
+.fs-6 {
+    margin-bottom: 3px;
+}
+
+.left {
+    padding: 0px;
+}
+
+.right {
+    padding-left: 4rem;
+}
+
+.switch {
+    margin-right: 1rem;
+    margin-left: 4rem;
+    transform: scale(2);
+    cursor: pointer; 
+}
+
+.switch:focus {
+    box-shadow: none; 
+    border-color: #f7f6fc;
+}
+
+.switch:checked {
+    background-color: #327cb9; 
+    border: none;
+}
+
+.dark-blue {
+    color: #193f76;
+}
+
+.info {
+    color: #b2bbc2;
+    cursor: default;
+}
+
+.plus-icon {
+    height:80%;
+    margin-right: 0.5rem;
+}
+
+#cancel-button {
+    margin-left: 1rem;
+    background-color: #d3d3eb;
+    border: none;
+    transition: 0.4s;
+}
+
+#cancel-button:hover {
+    background-color: #d85d5d;
+}
+
