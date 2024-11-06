@@ -17,7 +17,7 @@ const patients_count = document.getElementById('patientCount');
 var requestData = {
     name: "",
     conclusions: "",
-    sorting: "",
+    sorting: "NameAsc",
     scheduled: false, 
     mine: true,
     page: 1,
@@ -306,7 +306,6 @@ function makePatient(data) {
 
 registration_form.addEventListener('submit', (e) => {
     e.preventDefault();
-
     const name = input_patient_name.value;
     if (!name) {
         alert("Введите имя, пожалуйста!");
@@ -325,8 +324,9 @@ registration_form.addEventListener('submit', (e) => {
     };
     console.log(newPatient);
     addPatient(newPatient);
+    alert("Пациент был успешно добавлен");
 
-})
+});
 
 
 function addPatient(patient) {
