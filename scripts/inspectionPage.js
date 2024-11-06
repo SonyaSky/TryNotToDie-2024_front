@@ -421,7 +421,7 @@ function makeComments(data, list, consultationId) {
 
             replyButton.textContent = 'Закрыть';
 
-            submitButton.addEventListener('click', function() {
+            submitButton.addEventListener('click', (e) => {
                 const replyText = replyInput.value;
                 if (replyText) {
                     console.log('Reply submitted:', replyText);
@@ -429,7 +429,14 @@ function makeComments(data, list, consultationId) {
                         content: replyText,
                         parentId: data.id
                     };
-                    sendReply(new_reply, consultationId);
+                    sendReply(new_reply, consultationId)
+                    .then(() => {
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error sending reply:', error);
+                        alert('Произошла ошибка при отправке ответа');
+                    });
                     replyInput.value = '';
                     replyContainer.remove(); 
                     replyContainer = null; 

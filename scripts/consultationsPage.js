@@ -255,7 +255,7 @@ filter_form.addEventListener('submit', (e) => {
 function makeInspection(data) {
 
     const col = document.createElement("div");
-    col.className = "col-md-12";
+    col.className = "col-md-12 col-xxl-6";
     const patient = document.createElement("div");
     if (data.conclusion == 'Death') {
         patient.classList.add("dead-patient");
