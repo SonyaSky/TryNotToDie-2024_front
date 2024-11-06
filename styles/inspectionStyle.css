@@ -1,9 +1,21 @@
 .btn-primary {
     background-color: #3d7db8;
+    border: none;
 }
 
 .btn-primary:hover {
     background-color: #336DA2;
+}
+
+#cancel-button {
+    margin-left: 1rem;
+    background-color: #d3d3eb;
+    border: none;
+    transition: 0.4s;
+}
+
+#cancel-button:hover {
+    background-color: #d85d5d;
 }
 
 #my-container {

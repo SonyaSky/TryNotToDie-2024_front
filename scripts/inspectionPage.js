@@ -10,7 +10,9 @@ const treatment = document.getElementById("treatment");
 const conclusion = document.getElementById("conclusion");
 const diagnosis = document.getElementById("diagnosis");
 const consultations_list = document.getElementById("consultations");
+const edit_button = document.getElementById("edit-inspections-button");
 
+var insp_data;
 window.load = setData();
 
 function setData() {
@@ -20,6 +22,7 @@ function setData() {
     getInspection()
         .then((data) => {
             console.log(data);
+            insp_data = data;
             setInspection(data);
             data.consultations.forEach((c) => {
                 getConsultation(c.id)
@@ -29,6 +32,146 @@ function setData() {
             })
         });
 
+    edit_button.addEventListener('click', (e) => {
+        e.preventDefault();
+        setModal(insp_data);
+    })
+
+}
+
+function setModal(data) {
+    var new_diagnoses = [];
+    data.diagnoses.forEach((d) => {
+        console.log(d.name);
+        findIcdId(d.code).then((data) => {
+            console.log(data);
+            const new_d = {
+                icdDiagnosisId: data.records[0].id,
+                description: d.description,
+                type: d.type
+            }
+            new_diagnoses.push(new_d); 
+        });
+        
+    })
+    var new_data = {
+        anamnesis:data.anamnesis,
+        complaints:data.complaints,
+        treatment: data.treatment,
+        conclusion: data.conclusion,
+        nextVisitDate: data.nextVisitDate,
+        deathDate: data.deathDate,
+        diagnoses: new_diagnoses
+    }
+    const modal = document.getElementById('editModal');
+    const complaints = modal.querySelector('#complaints');
+    complaints.textContent = data.complaints;
+    const anamnesis = modal.querySelector('#anamnesis');
+    anamnesis.textContent = data.anamnesis;
+    const treatment = modal.querySelector('#treatment');
+    treatment.textContent = data.treatment;
+    const conclusion = modal.querySelector('#select-conclusion');
+    conclusion.value = data.conclusion;
+    const next_visit = modal.querySelector('#next-visit-input');
+    next_visit.value = data.nextVisitDate.split('T')[0];
+    const save_button = modal.querySelector('#save-button');
+
+    const nextVisitLabel = modal.querySelector('#next-visit');
+    const inputDate = modal.querySelector('#date-block');
+
+    conclusion.addEventListener('change', (e) => {
+        const selectedValue = e.target.value;
+        if (selectedValue === 'Recovery') {
+            inputDate.style.display = 'none';
+        } else if (selectedValue === 'Death') {
+            nextVisitLabel.style.display = 'block';
+            inputDate.style.display = 'block';
+            nextVisitLabel.textContent = 'Дата и время смерти';
+        } else {
+            nextVisitLabel.style.display = 'block';
+            inputDate.style.display = 'block';
+            nextVisitLabel.textContent = 'Дата следующего визита';
+        }
+    });
+
+    save_button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const current_date = new Date();
+        if (complaints.value == "") {
+            alert("Введите жалобы");
+            return;
+        }
+        if (anamnesis.value == "") {
+            alert("Введите анамнез");
+            return;
+        }
+        if (treatment.value == "") {
+            alert("Введите рекомендации по лечению");
+            return;
+        }
+        if (conclusion.value == "") {
+            alert("Добавьте заключение");
+            return;
+        }
+        var next_visit_date;
+        if (conclusion.value != "Recovery") {
+            if (next_visit.value == "") {
+                alert("Добавьте дату в заключение");
+                return;
+            }
+            next_visit_date = new Date(next_visit.value);
+        }
+        if (conclusion.value == "Death"){
+            if (next_visit_date > current_date){
+                alert("Дата смерти не может быть в будущем");
+                return;
+            }
+            new_data.deathDate = next_visit_date.toISOString();
+            new_data.nextVisitDate = null;
+        }
+        else if (conclusion.value == "Disease") {
+            if (next_visit_date < current_date){
+                alert("Дата следующего визита не может быть в прошлом");
+                return;
+            }
+            new_data.nextVisitDate = next_visit_date.toISOString();
+        }
+        new_data.complaints = complaints.value;
+        new_data.anamnesis = anamnesis.value;
+        new_data.treatment = treatment.value;
+        new_data.conclusion = conclusion.value;
+        console.log(new_data);
+        editInspection(new_data);
+    });
+}
+
+function editInspection(data) {
+    const token = JSON.parse(localStorage.getItem('token')); 
+    var inspId = JSON.parse(localStorage.getItem('inspectionId'));
+    return fetch(`https://mis-api.kreosoft.space/api/inspection/${inspId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error('An error occurred: ' + (errorData || 'Unknown error')); // Handle other errors
+            });
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log('Login successful:', data);
+        return data;
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+        throw error;
+    });
 }
 
 function setInspection(data) {
@@ -69,6 +212,7 @@ function setInspection(data) {
     conclusion.appendChild(conclusionParagraph);
     conclusion.appendChild(dateParagraph);
 }
+
 
 
 function formatDate(dateString, separator = '&ndash;') {
@@ -195,7 +339,7 @@ function makeConsultation(all_data, data) {
         comments_div.className = "comments";
         data.comments.forEach((comment) => {
             if (comment.parentId == null) {
-                const new_comment = makeComments(comment, data.comments);
+                const new_comment = makeComments(comment, data.comments, data.id);
                 comments_div.appendChild(new_comment);
             }
         })
@@ -205,7 +349,7 @@ function makeConsultation(all_data, data) {
     consultations_list.appendChild(mainDiv);
 }
 
-function makeComments(data, list) {
+function makeComments(data, list, consultationId) {
     const commentDiv = document.createElement('div');
     commentDiv.className = 'border-bottom border-dark-subtle comment';
 
@@ -263,32 +407,51 @@ function makeComments(data, list) {
     replyButton.textContent = 'Ответить';
     footerDiv.appendChild(replyButton);
 
+    let replyContainer; 
+
     replyButton.addEventListener('click', function() {
-        if (!document.getElementById('replyInput')) {
+        if (!replyContainer) {
+            replyContainer = document.createElement('div');
+            replyContainer.className = 'd-flex align-items-center mt-2'; 
+
             const replyInput = document.createElement('input');
             replyInput.type = 'text';
             replyInput.id = 'replyInput';
-            replyInput.className = 'form-control mt-2'; 
+            replyInput.className = 'form-control me-2'; 
             replyInput.placeholder = 'Введите ваш ответ...';
-    
+
             const submitButton = document.createElement('button');
             submitButton.type = 'button';
-            submitButton.className = 'btn btn-primary mt-2'; 
+            submitButton.className = 'btn btn-primary'; 
             submitButton.textContent = 'Отправить';
-    
-            footerDiv.appendChild(replyInput);
-            footerDiv.appendChild(submitButton);
-    
+
+            replyContainer.appendChild(replyInput);
+            replyContainer.appendChild(submitButton);
+            commentDiv.appendChild(replyContainer);
+
+            replyButton.textContent = 'Закрыть';
+
             submitButton.addEventListener('click', function() {
                 const replyText = replyInput.value;
                 if (replyText) {
-
                     console.log('Reply submitted:', replyText);
+                    const new_reply = {
+                        content: replyText,
+                        parentId: data.id
+                    };
+                    sendReply(new_reply, consultationId);
                     replyInput.value = '';
+                    replyContainer.remove(); 
+                    replyContainer = null; 
+                    replyButton.textContent = 'Ответить'; 
                 } else {
                     alert('Пожалуйста, введите текст ответа.');
                 }
             });
+        } else {
+            replyContainer.remove();
+            replyContainer = null; 
+            replyButton.textContent = 'Ответить'; 
         }
     });
 
@@ -297,6 +460,33 @@ function makeComments(data, list) {
     commentDiv.appendChild(footerDiv);
 
     return commentDiv;
+}
+
+function sendReply(data, consultationId) {
+    const token = JSON.parse(localStorage.getItem('token')); 
+    return fetch(`https://mis-api.kreosoft.space/api/consultation/${consultationId}/comment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error('An error occurred: ' + (errorData.errors || 'Unknown error')); // Handle other errors
+            });
+        }
+        return response.json();
+    })
+    .then((data) => {
+        return data;
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+        throw error;
+    });
 }
 
 function getConsultation(id) {
@@ -320,4 +510,21 @@ function getConsultation(id) {
     .catch((error) => {
         console.error('Error fetching data:', error); 
     });
+}
+
+
+function findIcdId(code) {
+    return fetch(`https://mis-api.kreosoft.space/api/dictionary/icd10?request=${code}&page=1&size=20`)
+    .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); 
+      })
+      .then(data => { 
+        return data;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
 }

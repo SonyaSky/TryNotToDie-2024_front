@@ -64,7 +64,7 @@
                         <p class="fs-2 fw-medium">Амбулаторный осмотр от <span id=ins-date> 06.06.2022 &ndash; 10:29</span></p>
                     </div>
                     <div class="col-3 text-end align-self-center">
-                        <button class="btn btn-primary" type="button" id="edit-inspections-button" data-bs-toggle="modal" data-bs-target="#registrationModal">
+                        <button class="btn btn-primary" type="button" id="edit-inspections-button" data-bs-toggle="modal" data-bs-target="#editModal">
                             Редактировать осмотр
                         </button>
                     </div>
@@ -157,8 +157,74 @@
         
     </div>
     </div>
+
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-body">
+                <div class="container" id="my-form">
+                    <form class="row gx-3 gy-3">
+                        <div class="col-12">
+                            <p class="fs-2 fw-bolder">Редактирование осмотра</p>
+                        </div>
+                
+                        <div class="col-12 title">
+                            <div class="mb-3">
+                                <label for="complaints" class="form-label fs-4 fw-medium dark-blue">Жалобы</label>
+                                <textarea class="form-control" id="complaints" rows="3" placeholder="Введите жалобы..."></textarea>
+                            </div>
+                        </div>
+                
+                        <div class="col-12 title">
+                            <div class="mb-3">
+                                <label for="anamnesis" class="form-label fs-4 fw-medium dark-blue">Анамнез заболевания</label>
+                                <textarea class="form-control" id="anamnesis" rows="3" placeholder="Введите анамнез заболевания..."></textarea>
+                            </div>
+                        </div>
+                
+                        <div class="col-12 title">
+                            <div class="mb-3">
+                                <label for="treatment" class="form-label fs-4 fw-medium dark-blue">Рекомендации по лечению</label>
+                                <textarea class="form-control" id="treatment" rows="3" placeholder="Введите рекомендации по лечению..."></textarea>
+                            </div>
+                        </div>
+                
+                        <div class="col-12 title">
+                            <div class="mb-3 row">
+                                <label for="conclusion" class="form-label fs-4 fw-medium dark-blue">Заключение</label>
+                                <div class="col-md-8">
+                                    <label for="select-conclusion" class="form-label info">Заключение</label>
+                                    <select class="form-select" aria-label="Заключение" id="select-conclusion">
+                                        <option value="" disabled selected hidden>Выберите заключение</option>
+                                        <option value="Disease">Болезнь</option>
+                                        <option value="Recovery">Выздоровление</option>
+                                        <option value="Death">Смерть</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4" id="date-block">
+                                    <label for="next-visit-input" class="form-label info" id="next-visit">Дата следующего визита</label>
+                                    <input type="date" class="form-control" id="next-visit-input">
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-12 text-center mb-3">
+                            <button type="submit" class="btn btn-primary fw-medium" id="save-button">
+                                Сохранить осмотр
+                            </button>
+                            <button class="btn btn-primary fw-medium" type="button" id="cancel-button" data-bs-dismiss="modal">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+        </div>
+      </div>
+    </div>
     
 </body>
+
 <script src="scripts/logout.js"></script>
 <script src="scripts/inspectionPage.js"></script>
 </html>

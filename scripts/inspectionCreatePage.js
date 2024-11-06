@@ -438,7 +438,7 @@ function addInspection(data) {
       .then((response) => {
         if (!response.ok) {
             return response.json().then(errorData => {
-                throw new Error('An error occurred: ' + (errorData.message || 'Unknown error')); // Handle other errors
+                throw new Error('An error occurred: ' + (errorData.errors || 'Unknown error')); // Handle other errors
             });
         }
         return response.json();
