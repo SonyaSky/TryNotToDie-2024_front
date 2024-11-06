@@ -10,12 +10,15 @@ const consultations_list = document.getElementById("consultations");
 const diagnoses_list = document.getElementById("diagnosis");
 const select_conclusion = document.getElementById("select-conclusion");
 const prev_inspection = document.getElementById("prev-inspection");
+const save_button = document.getElementById('save-button');
+const cancel_button = document.getElementById('cancel-button');
 
 var diagnoses = [];
 var consultations = [];
 var profileData = JSON.parse(localStorage.getItem('profileData')); 
 var specialties = [];
 var icd10roots = [];
+var main_count = 0;
 
 window.load = setData();
 
@@ -32,7 +35,6 @@ function setData() {
 
     fetchInspections()
         .then((inspectionsData) => {
-            console.log(inspectionsData);
             populateSelectInpections(inspectionsData);
         });
 
@@ -62,10 +64,13 @@ consultation_button.addEventListener('click', (e) => {
         speciality: findSpecialityName(speciality_input.value)
     }
     makeConsultation(data1);
+    const a = {
+        content: comment.value
+    }
 
     const data2 = {
         specialityId: speciality_input.value,
-        comment: comment.value
+        comment: a
     }
     consultations.push(data2);
 });
@@ -96,6 +101,9 @@ diagnosis_button.addEventListener('click', (e) => {
         type: conclusion
     }
     diagnoses.push(data2);
+    if (data2.type == "Main") {
+        main_count ++;
+    }
 });
 
 select_conclusion.addEventListener('change', (e) => {
@@ -302,7 +310,6 @@ function formatInspection(data) {
     return result;
 }
 
-
 document.getElementById('planned-visits').addEventListener('change', function () {
     if (this.checked) {
         prev_inspection.style.display = 'block';
@@ -314,3 +321,135 @@ document.getElementById('planned-visits').addEventListener('change', function ()
         rightLabel.style.color = 'black';
     }
 });
+
+cancel_button.addEventListener('click', () => {
+    location.reload();
+});
+
+
+
+save_button.addEventListener('click', (e) => {
+    e.preventDefault();
+    const f_date = document.getElementById('inputDateInsp');
+    const current_date = new Date();
+    if (f_date.value == "") {
+        alert("Введите дату осмотра");
+        return;
+    }
+    const s_date = new Date(f_date.value);
+    if (s_date > current_date) {
+        if (profileData.name.toLowerCase().includes("доктор кто")) {
+            alert("Я, конечно, понимаю - ТАРДИС и все дела, но осмотр не мог проходить в будущем!");
+        } else {
+            alert("Осмотр не мог проходить в будущем!");
+        }
+        return;
+    }
+    const date = new Date(document.getElementById('inputDateInsp').value);
+    const complaints = document.getElementById('complaints');
+    if (complaints.value == "") {
+        alert("Введите жалобы");
+        return;
+    }
+    const anamnesis = document.getElementById('anamnesis');
+    if (anamnesis.value == "") {
+        alert("Введите анамнез");
+        return;
+    }
+    const treatment = document.getElementById('treatment');
+    if (treatment.value == "") {
+        alert("Введите рекомендации по лечению");
+        return;
+    }
+
+    if (select_conclusion.value == "") {
+        alert("Добавьте заключение");
+        return;
+    }
+    var next_visit_date;
+    if (select_conclusion.value != "Recovery") {
+        if (document.getElementById('next-visit-input').value == "") {
+            alert("Добавьте дату в заключение");
+            return;
+        }
+        next_visit_date = new Date(document.getElementById('next-visit-input').value);
+    }
+
+    data = {
+        date: date.toISOString(),
+        anamnesis:anamnesis.value,
+        complaints:complaints.value,
+        treatment: treatment.value,
+        conclusion: select_conclusion.value,
+        nextVisitDate: null,
+        deathDate: null,
+        previousInspectionId: null,
+        diagnoses: diagnoses,
+        consultations:consultations
+    }
+    if (select_conclusion.value == "Death"){
+        if (next_visit_date > current_date){
+            alert("Дата смерти не может быть в будущем");
+            return;
+        }
+        data.deathDate = next_visit_date.toISOString();
+        data.nextVisitDate = null;
+    }
+    else if (select_conclusion.value == "Disease") {
+        if (next_visit_date < current_date){
+            alert("Дата следующего визита не может быть в прошлом");
+            return;
+        }
+        data.nextVisitDate = next_visit_date.toISOString();
+    }
+
+    if (main_count != 1) {
+        alert("Должен быть поставлен один основной диагноз");
+        return;
+    }
+
+    if (document.getElementById('planned-visits').checked) {
+        const inputPrev = document.getElementById('inputPrev');
+        data.previousInspectionId = inputPrev.value;
+    }
+    console.log(data);
+    addInspection(data)
+    .then((data) => {
+        const token = data.token; 
+        console.log(token); 
+    })
+    .catch((error) => {
+        console.error('Error:', error.message); 
+    });
+
+})
+
+function addInspection(data) {
+    const token = JSON.parse(localStorage.getItem('token')); 
+    const id = JSON.parse(localStorage.getItem('patientData')).id;
+    return fetch(`https://mis-api.kreosoft.space/api/patient/${id}/inspections`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                throw new Error('An error occurred: ' + (errorData.message || 'Unknown error')); // Handle other errors
+            });
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log('Login successful:', data);
+        return data;
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+        throw error;
+    });
+}
+

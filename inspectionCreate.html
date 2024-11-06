@@ -193,7 +193,7 @@
                 <div class="mb-3 row">
                     <label for="conclusion" class="form-label fs-4 fw-medium dark-blue">Заключение</label>
                     <div class="col-md-4">
-                        <label for="inputСonclusion" class="form-label info">Заключение</label>
+                        <label for="select-conclusion" class="form-label info">Заключение</label>
                         <select class="form-select" aria-label="Default select example" id="select-conclusion">
                             <option value="" disabled selected hidden class="choose">Выберите заключение</option>
                             <option value="Disease">Болезнь</option>
@@ -202,13 +202,13 @@
                         </select>
                     </div>
                     <div class="col-md-4" id="date-block">
-                        <label for="inputDate" class="form-label info" id="next-visit">Дата следующего визита</label>
-                        <input type="date" class="form-control" id="inputDate">
+                        <label for="next-visit-input" class="form-label info" id="next-visit">Дата следующего визита</label>
+                        <input type="date" class="form-control" id="next-visit-input">
                     </div>
                 </div>
             </div>
             <div class="col-12 text-center mb-3">
-                <button type="submit" class="btn btn-primary fw-medium">
+                <button type="submit" class="btn btn-primary fw-medium" id="save-button">
                      Сохранить осмотр
                 </button>
                 <button class="btn btn-primary fw-medium" type="button" id="cancel-button">Отмена</button>
