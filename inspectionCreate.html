@@ -75,9 +75,17 @@
                     
                     <div class="col-md-6 align-self-end">
                         <div class="form-check form-switch d-flex justify-content-between align-items-center left">
-                            <label class="form-check-label ms-1" for="planned-visits">Первичный осмотр</label>
+                            <label class="form-check-label ms-1" for="planned-visits" id="label-left">Первичный осмотр</label>
                             <input class="form-check-input switch" type="checkbox" role="switch" id="planned-visits" />
-                            <label class="form-check-label ms-1" for="planned-visits">Повторный осмотр</label>
+                            <label class="form-check-label ms-1" for="planned-visits" id="label-right">Повторный осмотр</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12" id="prev-inspection">
+                        <div class="col-5">
+                            <label for="inputDateInsp" class="form-label info">Предыдущий осмотр</label>
+                            <select class="form-select" id="inputPrev">
+                                <option value="">Выберите осмотр</option>     
+                            </select>
                         </div>
                     </div>
                     
@@ -102,44 +110,55 @@
                 </div>
             </div>
             <div class="col-12 title">
-                <p class="fs-4 fw-medium dark-blue">Консультация</p>
-                <form class="row ">
-                    <div class="mb-3 col-md-5 col-sm-12">
-                        <div class="form-check form-switch right" >
-                            <input class="form-check-input switch" type="checkbox" role="switch" id="need-consultation" checked/>
-                            <label class="form-check-label ms-2" for="need-consultation">Требуется консультация</label>
+                <p class="fs-4 fw-medium dark-blue" id="d">Консультация</p>
+                <div class="row gx-3 gy-3" id="consultations"></div>
+                <form class="row" id="consultation-form">
+                    <div class="container mt-5">
+                        <div class="row align-items-center mb-3">
+                            <div class="col-md-4 col-sm-12">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch" type="checkbox" role="switch" id="need-consultation" checked/>
+                                    <label class="form-check-label ms-2" for="need-consultation">Требуется консультация</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select id="inputSpeciality" class="form-select">
+                                    <option selected>Акушер-гинеколог</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-8 align-item-start mb-3">
-                        <select id="inputSpeciality" class="form-select">
-                          <option selected>Акушер-гинеколог</option>
-                          <option>...</option>
-                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="comment" class="form-label info">Комментарий</label>
                         <textarea class="form-control" id="comment" rows="3"></textarea>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="add-consultation">
                             <img src="images/plus.svg" alt="+" class="plus-icon"/>
                              Добавить консультацию
                         </button>
-                      </div>
+                    </div>
                 </form>
             </div>
             <div class="col-12 title">
                 <p class="fs-4 fw-medium dark-blue">Диагнозы</p>
-                <form class="row ">
+                <div class="col-12" id="diagnosis">
+                    <!-- <p class='fs-6 fw-bold'>(asd-10) sdfgsjdsgjdg</p>
+                    <div class="types">
+                        <p class="lh-1 fs-6 info">Тип в осмотре</p>
+                        <p class="lh-1 fs-6 info">Расшифровка</p>
+                    </div> -->
+                </div>
+                <form class="row" id="diagnoses-form">
                     <div class="col-12 align-item-start mb-3">
                         <label for="inputDisease" class="form-label info">Болезни</label>
-                        <select id="inputDisease" class="form-select">
-                          <option selected>Акушер-гинеколог</option>
-                          <option>...</option>
+                        <select id="inputDisease" class="form-select" data-live-search="true">
+                            <option value="">Выберите болезнь...</option>     
                         </select>
                     </div>
                     <div class="mb-3">
-                        <textarea class="form-control" id="comment" rows="1"></textarea>
+                        <textarea class="form-control" id="comment1" rows="1"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label col-12 info">Тип диагноза в осмотре:</label>
@@ -157,7 +176,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" id="add-diagnosis">
                             <img src="images/plus.svg" alt="+" class="plus-icon"/>
                              Добавить диагноз
                             </button>
@@ -175,14 +194,14 @@
                     <label for="conclusion" class="form-label fs-4 fw-medium dark-blue">Заключение</label>
                     <div class="col-md-4">
                         <label for="inputСonclusion" class="form-label info">Заключение</label>
-                        <select class="form-select" aria-label="Default select example" id="select">
+                        <select class="form-select" aria-label="Default select example" id="select-conclusion">
                             <option value="" disabled selected hidden class="choose">Выберите заключение</option>
                             <option value="Disease">Болезнь</option>
                             <option value="Recovery">Выздоровление</option>
                             <option value="Death">Смерть</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4" id="date-block">
                         <label for="inputDate" class="form-label info" id="next-visit">Дата следующего визита</label>
                         <input type="date" class="form-control" id="inputDate">
                     </div>
@@ -197,6 +216,9 @@
         </div>
     </form>
 </div>
+
+
 </body>
 <script src="scripts/logout.js"></script>
+<script src="scripts/inspectionCreatePage.js"></script>
 </html>

@@ -40,6 +40,10 @@
     padding-left: 4rem;
 }
 
+#d {
+    margin: 0px;
+}
+
 .switch {
     margin-right: 1rem;
     margin-left: 4rem;
@@ -82,3 +86,37 @@
     background-color: #d85d5d;
 }
 
+#planned-visits:not(:checked) + #label-left {
+    color: blue; 
+}
+
+
+#planned-visits:checked + #label-left {
+    color: black; 
+}
+
+#planned-visits:checked + #label-left + #planned-visits + #label-right {
+    color: blue;  
+}
+
+#label-left, #label-right {
+    color: black;
+    transition: color 0.3s ease;
+}
+
+.consult{
+    margin-bottom: 1rem;
+}
+
+#consultations {
+    margin-bottom: 1rem;
+}
+
+#diagnosis {
+    margin-bottom: 1rem;
+}
+
+.form-select {
+    max-height: 100px; 
+    overflow-y: auto; 
+}

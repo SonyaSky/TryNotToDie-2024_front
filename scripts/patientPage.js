@@ -4,6 +4,7 @@ const patient_name = document.getElementById("patient-name");
 const patient_birthday = document.getElementById("birthdayData");
 const patient_gender = document.getElementById("gender-icon");
 const pagination_list = document.getElementById("pages");
+const add_inspection_button = document.getElementById("add-inspections-button");
 
 const filter_form = document.getElementById('filter-form');
 const input_icdroot = document.getElementById('icd-10');
@@ -352,14 +353,18 @@ function makeInspection(data) {
         localStorage.setItem('inspectionId', JSON.stringify(data.id));
     });
 
-    //потом нужно нормальные ссылки поставить!!!
     if (data.conclusion != 'Death' && data.hasNested == false) {
         div2.className = 'd-flex align-items-center';
         const div1 = document.createElement("div");
         div1.className = 'd-flex align-items-center ms-auto me-3';
         const ref1 = document.createElement("a");
         ref1.className = 'text-decoration-none';
-        ref1.href = '#';
+        ref1.href = 'inspectionCreate.html';
+
+        ref1.addEventListener('click', () => {
+            localStorage.setItem('parentInspectionId', JSON.stringify(data.id));
+        });
+        
         const img1 = document.createElement("img");
         img1.src = "images/edit.svg";
         img1.alt = "Edit Icon";
@@ -490,3 +495,7 @@ function getChildInspections(id) {
         console.error('Error fetching data:', error); 
     });
 }
+
+add_inspection_button.addEventListener('click', () => {
+    window.location.href = "inspectionCreate.html";
+});
