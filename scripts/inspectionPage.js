@@ -136,6 +136,9 @@ function setModal(data) {
             }
             new_data.nextVisitDate = next_visit_date.toISOString();
         }
+        else {
+            new_data.nextVisitDate = null;
+        }
         new_data.complaints = complaints.value;
         new_data.anamnesis = anamnesis.value;
         new_data.treatment = treatment.value;
@@ -156,22 +159,6 @@ function editInspection(data) {
         },
         body: JSON.stringify(data),
       })
-      .then((response) => {
-        if (!response.ok) {
-            return response.json().then(errorData => {
-                throw new Error('An error occurred: ' + (errorData || 'Unknown error')); // Handle other errors
-            });
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log('Login successful:', data);
-        return data;
-    })
-    .catch((error) => {
-        console.error('Error:', error.message);
-        throw error;
-    });
 }
 
 function setInspection(data) {
@@ -206,11 +193,14 @@ function setInspection(data) {
             break;
     }
 
-    const dateParagraph = document.createElement('p');
-    dateParagraph.className = 'fs-6 info';
-    dateParagraph.innerHTML = `Дата следующего визита: ${formatDate(data.nextVisitDate, "")}`;
     conclusion.appendChild(conclusionParagraph);
-    conclusion.appendChild(dateParagraph);
+    if (data.nextVisitDate != null)
+    {
+        const dateParagraph = document.createElement('p');
+        dateParagraph.className = 'fs-6 info';
+        dateParagraph.innerHTML = `Дата следующего визита: ${formatDate(data.nextVisitDate, "")}`;
+        conclusion.appendChild(dateParagraph);
+    }
 }
 
 
